@@ -1,7 +1,12 @@
 import React from 'react';
+import { Page } from '../../components/Page';
 
 const ProductosPage = () => {
-  return <div></div>;
+  return (
+    <Page>
+      <div></div>
+    </Page>
+  );
 };
 
 export default ProductosPage;
