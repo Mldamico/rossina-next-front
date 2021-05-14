@@ -968,13 +968,36 @@ export type Product = {
   nombre?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   descripcion?: Maybe<Scalars['String']>;
-  imagen?: Maybe<ProductImage>;
+  imagen: Array<ProductImage>;
+  _imagenMeta?: Maybe<_QueryMeta>;
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
   tipoDePrenda?: Maybe<Scalars['String']>;
   stock: Array<Stock>;
   _stockMeta?: Maybe<_QueryMeta>;
   marca?: Maybe<Scalars['String']>;
+};
+
+
+/**  A keystone list  */
+export type ProductImagenArgs = {
+  where?: Maybe<ProductImageWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortProductImagesBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+/**  A keystone list  */
+export type Product_ImagenMetaArgs = {
+  where?: Maybe<ProductImageWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortProductImagesBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
 };
 
 
@@ -1003,7 +1026,7 @@ export type ProductCreateInput = {
   articulo?: Maybe<Scalars['String']>;
   nombre?: Maybe<Scalars['String']>;
   descripcion?: Maybe<Scalars['String']>;
-  imagen?: Maybe<ProductImageRelateToOneInput>;
+  imagen?: Maybe<ProductImageRelateToManyInput>;
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
   tipoDePrenda?: Maybe<Scalars['String']>;
@@ -1028,13 +1051,6 @@ export type ProductImageRelateToManyInput = {
   create?: Maybe<Array<Maybe<ProductImageCreateInput>>>;
   connect?: Maybe<Array<Maybe<ProductImageWhereUniqueInput>>>;
   disconnect?: Maybe<Array<Maybe<ProductImageWhereUniqueInput>>>;
-  disconnectAll?: Maybe<Scalars['Boolean']>;
-};
-
-export type ProductImageRelateToOneInput = {
-  create?: Maybe<ProductImageCreateInput>;
-  connect?: Maybe<ProductImageWhereUniqueInput>;
-  disconnect?: Maybe<ProductImageWhereUniqueInput>;
   disconnectAll?: Maybe<Scalars['Boolean']>;
 };
 
@@ -1102,7 +1118,7 @@ export type ProductUpdateInput = {
   articulo?: Maybe<Scalars['String']>;
   nombre?: Maybe<Scalars['String']>;
   descripcion?: Maybe<Scalars['String']>;
-  imagen?: Maybe<ProductImageRelateToOneInput>;
+  imagen?: Maybe<ProductImageRelateToManyInput>;
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
   tipoDePrenda?: Maybe<Scalars['String']>;
@@ -1175,8 +1191,12 @@ export type ProductWhereInput = {
   descripcion_not_ends_with_i?: Maybe<Scalars['String']>;
   descripcion_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   descripcion_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  imagen?: Maybe<ProductImageWhereInput>;
-  imagen_is_null?: Maybe<Scalars['Boolean']>;
+  /**  condition must be true for all nodes  */
+  imagen_every?: Maybe<ProductImageWhereInput>;
+  /**  condition must be true for at least 1 node  */
+  imagen_some?: Maybe<ProductImageWhereInput>;
+  /**  condition must be false for all nodes  */
+  imagen_none?: Maybe<ProductImageWhereInput>;
   status?: Maybe<Scalars['String']>;
   status_not?: Maybe<Scalars['String']>;
   status_in?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -2141,7 +2161,7 @@ export type AllProductsQuery = (
     & { stock: Array<(
       { __typename?: 'Stock' }
       & Pick<Stock, 'id' | 'color'>
-    )>, imagen?: Maybe<(
+    )>, imagen: Array<(
       { __typename?: 'ProductImage' }
       & Pick<ProductImage, 'id'>
       & { image?: Maybe<(
@@ -2150,6 +2170,30 @@ export type AllProductsQuery = (
       )> }
     )> }
   )>>> }
+);
+
+export type ProductByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ProductByIdQuery = (
+  { __typename?: 'Query' }
+  & { Product?: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'descripcion' | 'precio' | 'marca' | 'tipoDePrenda'>
+    & { stock: Array<(
+      { __typename?: 'Stock' }
+      & Pick<Stock, 'id' | 'color' | 'cantidadTalle0' | 'cantidadTalle1' | 'cantidadTalle2' | 'cantidadTalle3' | 'cantidadTalle4' | 'cantidadTalle5' | 'cantidadTalle6' | 'cantidadTalle7'>
+    )>, imagen: Array<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'id'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+      )> }
+    )> }
+  )> }
 );
 
 
@@ -2206,6 +2250,68 @@ export type AllProductsLazyQueryHookResult = ReturnType<typeof useAllProductsLaz
 export type AllProductsQueryResult = Apollo.QueryResult<AllProductsQuery, AllProductsQueryVariables>;
 export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
       return { query: AllProductsDocument, variables: variables }
+    }
+export const ProductByIdDocument = gql`
+    query productById($id: ID!) {
+  Product(where: {id: $id}) {
+    id
+    nombre
+    articulo
+    descripcion
+    precio
+    marca
+    tipoDePrenda
+    stock {
+      id
+      color
+      cantidadTalle0
+      cantidadTalle1
+      cantidadTalle2
+      cantidadTalle3
+      cantidadTalle4
+      cantidadTalle5
+      cantidadTalle6
+      cantidadTalle7
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductByIdQuery__
+ *
+ * To run a query within a React component, call `useProductByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProductByIdQuery(baseOptions: Apollo.QueryHookOptions<ProductByIdQuery, ProductByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, options);
+      }
+export function useProductByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductByIdQuery, ProductByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, options);
+        }
+export type ProductByIdQueryHookResult = ReturnType<typeof useProductByIdQuery>;
+export type ProductByIdLazyQueryHookResult = ReturnType<typeof useProductByIdLazyQuery>;
+export type ProductByIdQueryResult = Apollo.QueryResult<ProductByIdQuery, ProductByIdQueryVariables>;
+export function refetchProductByIdQuery(variables?: ProductByIdQueryVariables) {
+      return { query: ProductByIdDocument, variables: variables }
     }
 export type CartItemKeySpecifier = ('id' | 'cantidad' | 'producto' | 'usuario' | CartItemKeySpecifier)[];
 export type CartItemFieldPolicy = {
@@ -2366,7 +2472,7 @@ export type OrderItemFieldPolicy = {
 	marca?: FieldPolicy<any> | FieldReadFunction<any>,
 	orden?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductKeySpecifier = ('id' | 'label' | 'articulo' | 'nombre' | 'slug' | 'descripcion' | 'imagen' | 'status' | 'precio' | 'tipoDePrenda' | 'stock' | '_stockMeta' | 'marca' | ProductKeySpecifier)[];
+export type ProductKeySpecifier = ('id' | 'label' | 'articulo' | 'nombre' | 'slug' | 'descripcion' | 'imagen' | '_imagenMeta' | 'status' | 'precio' | 'tipoDePrenda' | 'stock' | '_stockMeta' | 'marca' | ProductKeySpecifier)[];
 export type ProductFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	label?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2375,6 +2481,7 @@ export type ProductFieldPolicy = {
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	descripcion?: FieldPolicy<any> | FieldReadFunction<any>,
 	imagen?: FieldPolicy<any> | FieldReadFunction<any>,
+	_imagenMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	status?: FieldPolicy<any> | FieldReadFunction<any>,
 	precio?: FieldPolicy<any> | FieldReadFunction<any>,
 	tipoDePrenda?: FieldPolicy<any> | FieldReadFunction<any>,

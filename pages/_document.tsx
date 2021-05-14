@@ -37,11 +37,15 @@ export default class MyDocument extends Document {
   }
   render() {
     return (
-      <Html>
+      <Html lang='es'>
         <Head>
           <link rel='preconnect' href='https://fonts.gstatic.com' />
           <link
             href='https://fonts.googleapis.com/css2?family=Oregano&display=swap'
+            rel='stylesheet'
+          />
+          <link
+            href='https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=swap'
             rel='stylesheet'
           />
         </Head>

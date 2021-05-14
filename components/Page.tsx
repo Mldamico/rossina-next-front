@@ -20,7 +20,7 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: inherit;
   }
   body {
-
+    font-family: 'Old Standard TT', serif;
     padding: 0;
     margin: 0;
     font-size: 1.5rem;

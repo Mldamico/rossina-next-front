@@ -1,0 +1,29 @@
+query productById($id: ID!) {
+  Product(where: { id: $id }) {
+    id
+    nombre
+    articulo
+    descripcion
+    precio
+    marca
+    tipoDePrenda
+    stock {
+      id
+      color
+      cantidadTalle0
+      cantidadTalle1
+      cantidadTalle2
+      cantidadTalle3
+      cantidadTalle4
+      cantidadTalle5
+      cantidadTalle6
+      cantidadTalle7
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}
