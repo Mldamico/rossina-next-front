@@ -1,8 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
 import styled from 'styled-components';
 
-const NavigationStyles = styled.nav`
+export const NavigationStyles = styled.nav`
   font-size: 1.8rem;
   /* width: 100%; */
   display: flex;
@@ -10,6 +8,7 @@ const NavigationStyles = styled.nav`
 
   a,
   button {
+    text-decoration: none;
     padding: 1rem 3rem;
     display: flex;
     align-items: center;
@@ -31,6 +30,29 @@ const NavigationStyles = styled.nav`
       top: 0;
       bottom: 0;
       /* transform: translateX(50%); */
+    }
+    &:after {
+      height: 2px;
+      background: #fff;
+      content: '';
+      width: 0;
+      position: absolute;
+      transform: translateX(-50%);
+      transition: width 0.4s;
+      transition-timing-function: cubic-bezier(1, -0.65, 0, 2.31);
+      left: 50%;
+      margin-top: 2rem;
+    }
+    &:hover,
+    &:focus {
+      outline: none;
+      text-decoration: none;
+      &:after {
+        width: calc(100% - 60px);
+      }
+      @media (max-width: 700px) {
+        width: calc(100% - 10px);
+      }
     }
   }
 
@@ -56,17 +78,3 @@ const NavigationStyles = styled.nav`
     }
   }
 `;
-
-export const Navegation = () => {
-  return (
-    <>
-      <NavigationStyles>
-        <Link href='/'>Home</Link>
-        <Link href='/productos'>Productos</Link>
-        <Link href='/productos'>Corseteria</Link>
-        <Link href='/productos'>Lenceria</Link>
-        <Link href='/productos'>Maternal</Link>
-      </NavigationStyles>
-    </>
-  );
-};

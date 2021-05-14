@@ -1,0 +1,22 @@
+query AllProducts {
+  allProducts {
+    id
+    nombre
+    articulo
+    slug
+    descripcion
+    precio
+    tipoDePrenda
+    marca
+    stock {
+      id
+      color
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}

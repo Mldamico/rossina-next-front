@@ -5,6 +5,8 @@ import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { NextPageContext } from 'next';
 import '../styles/nprogress.css';
 import withData from '../utils/withData';
+import React from 'react';
+import { Page } from '../components/Page';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -18,7 +20,9 @@ type ApolloAppProps = ApolloProps & AppProps;
 function MyApp({ Component, pageProps, apollo }: ApolloAppProps) {
   return (
     <ApolloProvider client={apollo}>
-      <Component {...pageProps} />
+      <Page>
+        <Component {...pageProps} />
+      </Page>
     </ApolloProvider>
   );
 }

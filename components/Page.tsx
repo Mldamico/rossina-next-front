@@ -1,11 +1,10 @@
 import React from 'react';
-import { Header } from './Header';
+import { Header } from './layout/Header';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
-  
   html {
-    --red: #ff0000;
+    --red: #ff3744;
     --black: #393939;
     --grey: #3A3A3A;
     --gray: var(--grey);
@@ -31,9 +30,7 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
     color: var(---black);
   }
-  a:hover {
-    text-decoration: underline;
-  }
+ 
 
 `;
 
