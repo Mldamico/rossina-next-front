@@ -2150,6 +2150,50 @@ export type _QueryMeta = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type AllCorseteriaQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllCorseteriaQuery = (
+  { __typename?: 'Query' }
+  & { allProducts?: Maybe<Array<Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
+    & { stock: Array<(
+      { __typename?: 'Stock' }
+      & Pick<Stock, 'id' | 'color'>
+    )>, imagen: Array<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'id'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+      )> }
+    )> }
+  )>>> }
+);
+
+export type AllLenceriaQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllLenceriaQuery = (
+  { __typename?: 'Query' }
+  & { allProducts?: Maybe<Array<Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
+    & { stock: Array<(
+      { __typename?: 'Stock' }
+      & Pick<Stock, 'id' | 'color'>
+    )>, imagen: Array<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'id'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+      )> }
+    )> }
+  )>>> }
+);
+
 export type AllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2197,6 +2241,114 @@ export type ProductByIdQuery = (
 );
 
 
+export const AllCorseteriaDocument = gql`
+    query AllCorseteria {
+  allProducts(where: {tipoDePrenda: "Corseteria"}) {
+    id
+    nombre
+    articulo
+    slug
+    descripcion
+    precio
+    tipoDePrenda
+    marca
+    stock {
+      id
+      color
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllCorseteriaQuery__
+ *
+ * To run a query within a React component, call `useAllCorseteriaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllCorseteriaQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllCorseteriaQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllCorseteriaQuery(baseOptions?: Apollo.QueryHookOptions<AllCorseteriaQuery, AllCorseteriaQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllCorseteriaQuery, AllCorseteriaQueryVariables>(AllCorseteriaDocument, options);
+      }
+export function useAllCorseteriaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllCorseteriaQuery, AllCorseteriaQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllCorseteriaQuery, AllCorseteriaQueryVariables>(AllCorseteriaDocument, options);
+        }
+export type AllCorseteriaQueryHookResult = ReturnType<typeof useAllCorseteriaQuery>;
+export type AllCorseteriaLazyQueryHookResult = ReturnType<typeof useAllCorseteriaLazyQuery>;
+export type AllCorseteriaQueryResult = Apollo.QueryResult<AllCorseteriaQuery, AllCorseteriaQueryVariables>;
+export function refetchAllCorseteriaQuery(variables?: AllCorseteriaQueryVariables) {
+      return { query: AllCorseteriaDocument, variables: variables }
+    }
+export const AllLenceriaDocument = gql`
+    query AllLenceria {
+  allProducts(where: {tipoDePrenda: "Lenceria"}) {
+    id
+    nombre
+    articulo
+    slug
+    descripcion
+    precio
+    tipoDePrenda
+    marca
+    stock {
+      id
+      color
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllLenceriaQuery__
+ *
+ * To run a query within a React component, call `useAllLenceriaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllLenceriaQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllLenceriaQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllLenceriaQuery(baseOptions?: Apollo.QueryHookOptions<AllLenceriaQuery, AllLenceriaQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllLenceriaQuery, AllLenceriaQueryVariables>(AllLenceriaDocument, options);
+      }
+export function useAllLenceriaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllLenceriaQuery, AllLenceriaQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllLenceriaQuery, AllLenceriaQueryVariables>(AllLenceriaDocument, options);
+        }
+export type AllLenceriaQueryHookResult = ReturnType<typeof useAllLenceriaQuery>;
+export type AllLenceriaLazyQueryHookResult = ReturnType<typeof useAllLenceriaLazyQuery>;
+export type AllLenceriaQueryResult = Apollo.QueryResult<AllLenceriaQuery, AllLenceriaQueryVariables>;
+export function refetchAllLenceriaQuery(variables?: AllLenceriaQueryVariables) {
+      return { query: AllLenceriaDocument, variables: variables }
+    }
 export const AllProductsDocument = gql`
     query AllProducts {
   allProducts {

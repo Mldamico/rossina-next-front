@@ -25,6 +25,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-size: 1.5rem;
     line-height:2;
+    background-color: #fff;
   }
   a {
     text-decoration: none;

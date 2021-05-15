@@ -1,0 +1,22 @@
+query AllCorseteria {
+  allProducts(where: { tipoDePrenda: "Corseteria" }) {
+    id
+    nombre
+    articulo
+    slug
+    descripcion
+    precio
+    tipoDePrenda
+    marca
+    stock {
+      id
+      color
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}

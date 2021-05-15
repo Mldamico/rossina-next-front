@@ -8,8 +8,8 @@ export const Navegation = () => {
       <NavigationStyles>
         <Link href='/'>Home</Link>
         <Link href='/productos'>Productos</Link>
-        <Link href='/productos'>Corseteria</Link>
-        <Link href='/productos'>Lenceria</Link>
+        <Link href='/corseteria'>Corseteria</Link>
+        <Link href='/lenceria'>Lenceria</Link>
         <Link href='/productos'>Maternal</Link>
       </NavigationStyles>
     </>

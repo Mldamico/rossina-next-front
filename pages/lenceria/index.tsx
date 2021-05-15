@@ -1,15 +1,15 @@
 import React from 'react';
 import { ProductLayout } from '../../components/products/ProductLayout';
-import { Products } from '../../components/products/Products';
 import { Sidebar } from '../../components/products/Sidebar';
+import { Lenceria } from '../../components/lenceria/Lenceria';
 
-const ProductosPage = () => {
+const LenceriaPage = () => {
   return (
     <ProductLayout>
       <Sidebar />
-      <Products />
+      <Lenceria />
     </ProductLayout>
   );
 };
 
-export default ProductosPage;
+export default LenceriaPage;
