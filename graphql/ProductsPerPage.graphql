@@ -1,5 +1,9 @@
-query ProductsPerPage($skip: Int = 0, $first: Int) {
-  allProducts(first: $first, skip: $skip) {
+query ProductsPerPage($skip: Int = 0, $first: Int, $tipoDePrenda: String) {
+  allProducts(
+    first: $first
+    skip: $skip
+    where: { tipoDePrenda: $tipoDePrenda }
+  ) {
     id
     nombre
     articulo

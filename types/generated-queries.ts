@@ -2218,6 +2218,7 @@ export type AllProductsQuery = (
 
 export type PaginationQueryVariables = Exact<{
   tipoDePrenda?: Maybe<Scalars['String']>;
+  marca?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -2256,6 +2257,7 @@ export type ProductByIdQuery = (
 export type ProductsPerPageQueryVariables = Exact<{
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
+  tipoDePrenda?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -2466,8 +2468,8 @@ export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
       return { query: AllProductsDocument, variables: variables }
     }
 export const PaginationDocument = gql`
-    query Pagination($tipoDePrenda: String) {
-  _allProductsMeta(where: {tipoDePrenda: $tipoDePrenda}) {
+    query Pagination($tipoDePrenda: String, $marca: String) {
+  _allProductsMeta(where: {tipoDePrenda: $tipoDePrenda, marca: $marca}) {
     count
   }
 }
@@ -2486,6 +2488,7 @@ export const PaginationDocument = gql`
  * const { data, loading, error } = usePaginationQuery({
  *   variables: {
  *      tipoDePrenda: // value for 'tipoDePrenda'
+ *      marca: // value for 'marca'
  *   },
  * });
  */
@@ -2566,8 +2569,8 @@ export function refetchProductByIdQuery(variables?: ProductByIdQueryVariables) {
       return { query: ProductByIdDocument, variables: variables }
     }
 export const ProductsPerPageDocument = gql`
-    query ProductsPerPage($skip: Int = 0, $first: Int) {
-  allProducts(first: $first, skip: $skip) {
+    query ProductsPerPage($skip: Int = 0, $first: Int, $tipoDePrenda: String) {
+  allProducts(first: $first, skip: $skip, where: {tipoDePrenda: $tipoDePrenda}) {
     id
     nombre
     articulo
@@ -2604,6 +2607,7 @@ export const ProductsPerPageDocument = gql`
  *   variables: {
  *      skip: // value for 'skip'
  *      first: // value for 'first'
+ *      tipoDePrenda: // value for 'tipoDePrenda'
  *   },
  * });
  */

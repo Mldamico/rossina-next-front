@@ -10,16 +10,12 @@ import { Product } from './Product';
 import { LoadingSpinner } from '../layout/LoadingSpinner';
 import { Pagination } from '../layout/Pagination';
 import { perPage } from '../../config';
+import { ProductsContainer } from '../layout/ProductsContainer';
 
 const ProductsStyles = styled.main`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   grid-gap: 5rem;
-`;
-
-const ProductsContainerStyles = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 export const Products = ({ page }) => {
@@ -31,16 +27,13 @@ export const Products = ({ page }) => {
 
   return (
     <>
-      <ProductsContainerStyles>
-        <Pagination page={Number(page) || 1} />
-
+      <ProductsContainer page={page}>
         <ProductsStyles>
           {data?.allProducts?.map((product) => (
             <Product key={product.id} product={product} />
           ))}
         </ProductsStyles>
-        <Pagination page={Number(page) || 1} />
-      </ProductsContainerStyles>
+      </ProductsContainer>
     </>
   );
 };

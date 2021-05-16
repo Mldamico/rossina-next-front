@@ -11,11 +11,11 @@ export const LenceriaSidebar = () => {
       <h3>PRODUCTOS</h3>
       <div className='sidebar-link'>
         <Link href='/lenceria'>VER TODO</Link>
-        <Link href='/lenceria/arlen'>Arlen</Link>
-        <Link href='/lenceria/delledonne'>Delledonne</Link>
-        <Link href='/lenceria/promesse'>Promesse</Link>
-        <Link href='/lenceria/puedo-querer'>Puedo Querer</Link>
-        <Link href='/lenceria/susurro'>Susurro</Link>
+        <Link href='/arlen'>Arlen</Link>
+        <Link href='/delledonne'>Delledonne</Link>
+        <Link href='/promesse'>Promesse</Link>
+        <Link href='/puedo-querer'>Puedo Querer</Link>
+        <Link href='/susurro'>Susurro</Link>
       </div>
     </SidebarLayout>
   );

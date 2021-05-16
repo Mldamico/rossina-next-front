@@ -1,5 +1,5 @@
-query Pagination($tipoDePrenda: String) {
-  _allProductsMeta(where: { tipoDePrenda: $tipoDePrenda }) {
+query Pagination($tipoDePrenda: String, $marca: String) {
+  _allProductsMeta(where: { tipoDePrenda: $tipoDePrenda, marca: $marca }) {
     count
   }
 }
