@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAllLenceriaQuery } from '../../types/generated-queries';
+import {
+  useAllLenceriaQuery,
+  useProductByBrandQuery,
+} from '../../types/generated-queries';
 import { Product } from '../products/Product';
 import { LoadingSpinner } from '../layout/LoadingSpinner';
 const ProductsStyles = styled.main`
@@ -9,8 +12,12 @@ const ProductsStyles = styled.main`
   grid-gap: 5rem;
 `;
 
-export const Lenceria = () => {
-  const { data, error, loading } = useAllLenceriaQuery();
+export const LenceriaByBrand = ({ brand }: { brand: string }) => {
+  const { data, error, loading } = useProductByBrandQuery({
+    variables: { marca: brand },
+  });
+
+  console.log(data);
 
   if (loading) return <LoadingSpinner />;
   return (

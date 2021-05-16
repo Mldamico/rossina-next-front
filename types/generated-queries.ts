@@ -2240,6 +2240,30 @@ export type ProductByIdQuery = (
   )> }
 );
 
+export type ProductByBrandQueryVariables = Exact<{
+  marca: Scalars['String'];
+}>;
+
+
+export type ProductByBrandQuery = (
+  { __typename?: 'Query' }
+  & { allProducts?: Maybe<Array<Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
+    & { stock: Array<(
+      { __typename?: 'Stock' }
+      & Pick<Stock, 'id' | 'color'>
+    )>, imagen: Array<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'id'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+      )> }
+    )> }
+  )>>> }
+);
+
 
 export const AllCorseteriaDocument = gql`
     query AllCorseteria {
@@ -2464,6 +2488,61 @@ export type ProductByIdLazyQueryHookResult = ReturnType<typeof useProductByIdLaz
 export type ProductByIdQueryResult = Apollo.QueryResult<ProductByIdQuery, ProductByIdQueryVariables>;
 export function refetchProductByIdQuery(variables?: ProductByIdQueryVariables) {
       return { query: ProductByIdDocument, variables: variables }
+    }
+export const ProductByBrandDocument = gql`
+    query productByBrand($marca: String!) {
+  allProducts(where: {marca: $marca}) {
+    id
+    nombre
+    articulo
+    slug
+    descripcion
+    precio
+    tipoDePrenda
+    marca
+    stock {
+      id
+      color
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductByBrandQuery__
+ *
+ * To run a query within a React component, call `useProductByBrandQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductByBrandQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductByBrandQuery({
+ *   variables: {
+ *      marca: // value for 'marca'
+ *   },
+ * });
+ */
+export function useProductByBrandQuery(baseOptions: Apollo.QueryHookOptions<ProductByBrandQuery, ProductByBrandQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductByBrandQuery, ProductByBrandQueryVariables>(ProductByBrandDocument, options);
+      }
+export function useProductByBrandLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductByBrandQuery, ProductByBrandQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductByBrandQuery, ProductByBrandQueryVariables>(ProductByBrandDocument, options);
+        }
+export type ProductByBrandQueryHookResult = ReturnType<typeof useProductByBrandQuery>;
+export type ProductByBrandLazyQueryHookResult = ReturnType<typeof useProductByBrandLazyQuery>;
+export type ProductByBrandQueryResult = Apollo.QueryResult<ProductByBrandQuery, ProductByBrandQueryVariables>;
+export function refetchProductByBrandQuery(variables?: ProductByBrandQueryVariables) {
+      return { query: ProductByBrandDocument, variables: variables }
     }
 export type CartItemKeySpecifier = ('id' | 'cantidad' | 'producto' | 'usuario' | CartItemKeySpecifier)[];
 export type CartItemFieldPolicy = {

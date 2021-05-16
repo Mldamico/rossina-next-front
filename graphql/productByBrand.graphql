@@ -1,0 +1,22 @@
+query productByBrand($marca: String!) {
+  allProducts(where: { marca: $marca }) {
+    id
+    nombre
+    articulo
+    slug
+    descripcion
+    precio
+    tipoDePrenda
+    marca
+    stock {
+      id
+      color
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}

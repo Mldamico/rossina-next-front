@@ -6,6 +6,8 @@ import {
   useAllProductsQuery,
 } from '../../types/generated-queries';
 import { Product } from './Product';
+import { LoadingSpinner } from '../layout/LoadingSpinner';
+
 const ProductsStyles = styled.main`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -15,7 +17,8 @@ const ProductsStyles = styled.main`
 export const Products = () => {
   const { data, error, loading } = useAllProductsQuery();
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) return <LoadingSpinner />;
+
   return (
     <ProductsStyles>
       {data?.allProducts?.map((product) => (
