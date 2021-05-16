@@ -2216,6 +2216,19 @@ export type AllProductsQuery = (
   )>>> }
 );
 
+export type PaginationQueryVariables = Exact<{
+  tipoDePrenda?: Maybe<Scalars['String']>;
+}>;
+
+
+export type PaginationQuery = (
+  { __typename?: 'Query' }
+  & { _allProductsMeta?: Maybe<(
+    { __typename?: '_QueryMeta' }
+    & Pick<_QueryMeta, 'count'>
+  )> }
+);
+
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -2238,6 +2251,31 @@ export type ProductByIdQuery = (
       )> }
     )> }
   )> }
+);
+
+export type ProductsPerPageQueryVariables = Exact<{
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type ProductsPerPageQuery = (
+  { __typename?: 'Query' }
+  & { allProducts?: Maybe<Array<Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
+    & { stock: Array<(
+      { __typename?: 'Stock' }
+      & Pick<Stock, 'id' | 'color'>
+    )>, imagen: Array<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'id'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+      )> }
+    )> }
+  )>>> }
 );
 
 export type ProductByBrandQueryVariables = Exact<{
@@ -2427,6 +2465,44 @@ export type AllProductsQueryResult = Apollo.QueryResult<AllProductsQuery, AllPro
 export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
       return { query: AllProductsDocument, variables: variables }
     }
+export const PaginationDocument = gql`
+    query Pagination($tipoDePrenda: String) {
+  _allProductsMeta(where: {tipoDePrenda: $tipoDePrenda}) {
+    count
+  }
+}
+    `;
+
+/**
+ * __usePaginationQuery__
+ *
+ * To run a query within a React component, call `usePaginationQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePaginationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePaginationQuery({
+ *   variables: {
+ *      tipoDePrenda: // value for 'tipoDePrenda'
+ *   },
+ * });
+ */
+export function usePaginationQuery(baseOptions?: Apollo.QueryHookOptions<PaginationQuery, PaginationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PaginationQuery, PaginationQueryVariables>(PaginationDocument, options);
+      }
+export function usePaginationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PaginationQuery, PaginationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PaginationQuery, PaginationQueryVariables>(PaginationDocument, options);
+        }
+export type PaginationQueryHookResult = ReturnType<typeof usePaginationQuery>;
+export type PaginationLazyQueryHookResult = ReturnType<typeof usePaginationLazyQuery>;
+export type PaginationQueryResult = Apollo.QueryResult<PaginationQuery, PaginationQueryVariables>;
+export function refetchPaginationQuery(variables?: PaginationQueryVariables) {
+      return { query: PaginationDocument, variables: variables }
+    }
 export const ProductByIdDocument = gql`
     query productById($id: ID!) {
   Product(where: {id: $id}) {
@@ -2488,6 +2564,62 @@ export type ProductByIdLazyQueryHookResult = ReturnType<typeof useProductByIdLaz
 export type ProductByIdQueryResult = Apollo.QueryResult<ProductByIdQuery, ProductByIdQueryVariables>;
 export function refetchProductByIdQuery(variables?: ProductByIdQueryVariables) {
       return { query: ProductByIdDocument, variables: variables }
+    }
+export const ProductsPerPageDocument = gql`
+    query ProductsPerPage($skip: Int = 0, $first: Int) {
+  allProducts(first: $first, skip: $skip) {
+    id
+    nombre
+    articulo
+    slug
+    descripcion
+    precio
+    tipoDePrenda
+    marca
+    stock {
+      id
+      color
+    }
+    imagen {
+      id
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsPerPageQuery__
+ *
+ * To run a query within a React component, call `useProductsPerPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsPerPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsPerPageQuery({
+ *   variables: {
+ *      skip: // value for 'skip'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useProductsPerPageQuery(baseOptions?: Apollo.QueryHookOptions<ProductsPerPageQuery, ProductsPerPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsPerPageQuery, ProductsPerPageQueryVariables>(ProductsPerPageDocument, options);
+      }
+export function useProductsPerPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsPerPageQuery, ProductsPerPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsPerPageQuery, ProductsPerPageQueryVariables>(ProductsPerPageDocument, options);
+        }
+export type ProductsPerPageQueryHookResult = ReturnType<typeof useProductsPerPageQuery>;
+export type ProductsPerPageLazyQueryHookResult = ReturnType<typeof useProductsPerPageLazyQuery>;
+export type ProductsPerPageQueryResult = Apollo.QueryResult<ProductsPerPageQuery, ProductsPerPageQueryVariables>;
+export function refetchProductsPerPageQuery(variables?: ProductsPerPageQueryVariables) {
+      return { query: ProductsPerPageDocument, variables: variables }
     }
 export const ProductByBrandDocument = gql`
     query productByBrand($marca: String!) {
