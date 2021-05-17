@@ -4,5 +4,12 @@ import { CarouselImages } from '../components/CarouselImages';
 import { Page } from '../components/Page';
 
 export default function Home() {
-  return <div>{/* <CarouselImages /> */}</div>;
+  return (
+    <div>
+      <Head>
+        <title>Lenceria Rossina</title>
+      </Head>
+      {/* <CarouselImages /> */}
+    </div>
+  );
 }

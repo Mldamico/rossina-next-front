@@ -1,7 +1,7 @@
 import React from 'react';
-import { Brands } from '../../../components/brands/Brands';
-import { ProductLayout } from '../../../components/products/ProductLayout';
-import { LenceriaSidebar } from '../../../components/lenceria/LenceriaSidebar';
+import { Brands } from '../../../../components/brands/Brands';
+import { ProductLayout } from '../../../../components/products/ProductLayout';
+import { LenceriaSidebar } from '../../../../components/lenceria/LenceriaSidebar';
 
 const LenceriaBrand = ({ query }) => {
   const { brand } = query;
