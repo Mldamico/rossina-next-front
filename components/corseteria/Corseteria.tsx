@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAllCorseteriaQuery } from '../../types/generated-queries';
+import { perPage } from '../../config';
+import {
+  useProductsPerPageQuery,
+} from '../../types/generated-queries';
+import { ProductsContainer } from '../layout/ProductsContainer';
 import { Product } from '../products/Product';
 const ProductsStyles = styled.main`
   display: grid;
@@ -8,15 +12,23 @@ const ProductsStyles = styled.main`
   grid-gap: 5rem;
 `;
 
-export const Corseteria = () => {
-  const { data, error, loading } = useAllCorseteriaQuery();
-
+export const Corseteria = ({ page }) => {
+  const { data, error, loading } = useProductsPerPageQuery({
+    variables: {
+      skip: page * perPage - perPage,
+      first: perPage,
+      tipoDePrenda: 'Corseteria',
+    },
+  });
+  console.log(error);
   if (loading) return <p>Cargando...</p>;
   return (
-    <ProductsStyles>
-      {data?.allProducts?.map((product) => (
-        <Product key={product.id} product={product} />
-      ))}
-    </ProductsStyles>
+    <ProductsContainer page={page} tipoDePrenda='Corseteria'>
+      <ProductsStyles>
+        {data?.allProducts?.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </ProductsStyles>
+    </ProductsContainer>
   );
 };

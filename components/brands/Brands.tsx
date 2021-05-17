@@ -13,13 +13,7 @@ const ProductsStyles = styled.main`
   grid-gap: 5rem;
 `;
 
-export const LenceriaByBrand = ({
-  marca,
-  page,
-}: {
-  marca: string;
-  page: number;
-}) => {
+export const Brands = ({ marca, page }: { marca: string; page: number }) => {
   const { data, error, loading } = useProductByBrandQuery({
     variables: { marca },
   });

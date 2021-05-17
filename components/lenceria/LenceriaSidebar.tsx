@@ -6,7 +6,7 @@ export const LenceriaSidebar = () => {
   return (
     <SidebarLayout>
       <div className='sidebar-path'>
-        <Link href='/'>Home</Link> / PRODUCTOS
+        <Link href='/'>Home</Link> / LENCERIA
       </div>
       <h3>PRODUCTOS</h3>
       <div className='sidebar-link'>

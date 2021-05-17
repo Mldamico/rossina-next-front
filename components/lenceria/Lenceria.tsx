@@ -23,7 +23,6 @@ export const Lenceria = ({ page }) => {
     },
   });
 
-  console.log(data);
   if (loading) return <LoadingSpinner />;
   return (
     <ProductsContainer page={page} tipoDePrenda='Lenceria'>
