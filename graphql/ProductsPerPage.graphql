@@ -1,8 +1,16 @@
-query ProductsPerPage($skip: Int = 0, $first: Int, $tipoDePrenda: String) {
+query ProductsPerPage(
+  $skip: Int = 0
+  $first: Int
+  $tipoDePrenda: String
+  $marca: String
+) {
   allProducts(
     first: $first
     skip: $skip
-    where: { tipoDePrenda: $tipoDePrenda }
+    where: {
+      tipoDePrenda: { tipo_i: $tipoDePrenda }
+      marca: { marca_i: $marca }
+    }
   ) {
     id
     nombre
@@ -10,8 +18,14 @@ query ProductsPerPage($skip: Int = 0, $first: Int, $tipoDePrenda: String) {
     slug
     descripcion
     precio
-    tipoDePrenda
-    marca
+    tipoDePrenda {
+      id
+      tipo
+    }
+    marca {
+      id
+      marca
+    }
     stock {
       id
       color

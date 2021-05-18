@@ -22,6 +22,138 @@ export type Scalars = {
 export type AuthenticatedItem = User;
 
 /**  A keystone list  */
+export type Brand = {
+  __typename?: 'Brand';
+  id: Scalars['ID'];
+  label?: Maybe<Scalars['String']>;
+  marca?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  tipoDePrenda: Array<TipoDePrenda>;
+  _tipoDePrendaMeta?: Maybe<_QueryMeta>;
+  producto: Array<Product>;
+  _productoMeta?: Maybe<_QueryMeta>;
+};
+
+
+/**  A keystone list  */
+export type BrandTipoDePrendaArgs = {
+  where?: Maybe<TipoDePrendaWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortTipoDePrendasBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+/**  A keystone list  */
+export type Brand_TipoDePrendaMetaArgs = {
+  where?: Maybe<TipoDePrendaWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortTipoDePrendasBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+/**  A keystone list  */
+export type BrandProductoArgs = {
+  where?: Maybe<ProductWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortProductsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+/**  A keystone list  */
+export type Brand_ProductoMetaArgs = {
+  where?: Maybe<ProductWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortProductsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+export type BrandCreateInput = {
+  marca?: Maybe<Scalars['String']>;
+  tipoDePrenda?: Maybe<TipoDePrendaRelateToManyInput>;
+  producto?: Maybe<ProductRelateToManyInput>;
+};
+
+export type BrandRelateToOneInput = {
+  create?: Maybe<BrandCreateInput>;
+  connect?: Maybe<BrandWhereUniqueInput>;
+  disconnect?: Maybe<BrandWhereUniqueInput>;
+  disconnectAll?: Maybe<Scalars['Boolean']>;
+};
+
+export type BrandUpdateInput = {
+  marca?: Maybe<Scalars['String']>;
+  tipoDePrenda?: Maybe<TipoDePrendaRelateToManyInput>;
+  producto?: Maybe<ProductRelateToManyInput>;
+};
+
+export type BrandWhereInput = {
+  AND?: Maybe<Array<Maybe<BrandWhereInput>>>;
+  OR?: Maybe<Array<Maybe<BrandWhereInput>>>;
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_lt?: Maybe<Scalars['ID']>;
+  id_lte?: Maybe<Scalars['ID']>;
+  id_gt?: Maybe<Scalars['ID']>;
+  id_gte?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  marca?: Maybe<Scalars['String']>;
+  marca_not?: Maybe<Scalars['String']>;
+  marca_contains?: Maybe<Scalars['String']>;
+  marca_not_contains?: Maybe<Scalars['String']>;
+  marca_starts_with?: Maybe<Scalars['String']>;
+  marca_not_starts_with?: Maybe<Scalars['String']>;
+  marca_ends_with?: Maybe<Scalars['String']>;
+  marca_not_ends_with?: Maybe<Scalars['String']>;
+  marca_i?: Maybe<Scalars['String']>;
+  marca_not_i?: Maybe<Scalars['String']>;
+  marca_contains_i?: Maybe<Scalars['String']>;
+  marca_not_contains_i?: Maybe<Scalars['String']>;
+  marca_starts_with_i?: Maybe<Scalars['String']>;
+  marca_not_starts_with_i?: Maybe<Scalars['String']>;
+  marca_ends_with_i?: Maybe<Scalars['String']>;
+  marca_not_ends_with_i?: Maybe<Scalars['String']>;
+  marca_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  marca_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /**  condition must be true for all nodes  */
+  tipoDePrenda_every?: Maybe<TipoDePrendaWhereInput>;
+  /**  condition must be true for at least 1 node  */
+  tipoDePrenda_some?: Maybe<TipoDePrendaWhereInput>;
+  /**  condition must be false for all nodes  */
+  tipoDePrenda_none?: Maybe<TipoDePrendaWhereInput>;
+  /**  condition must be true for all nodes  */
+  producto_every?: Maybe<ProductWhereInput>;
+  /**  condition must be true for at least 1 node  */
+  producto_some?: Maybe<ProductWhereInput>;
+  /**  condition must be false for all nodes  */
+  producto_none?: Maybe<ProductWhereInput>;
+};
+
+export type BrandWhereUniqueInput = {
+  id: Scalars['ID'];
+};
+
+export type BrandsCreateInput = {
+  data?: Maybe<BrandCreateInput>;
+};
+
+export type BrandsUpdateInput = {
+  id: Scalars['ID'];
+  data?: Maybe<BrandUpdateInput>;
+};
+
+/**  A keystone list  */
 export type CartItem = {
   __typename?: 'CartItem';
   id: Scalars['ID'];
@@ -344,6 +476,30 @@ export type Mutation = {
   deleteOrder?: Maybe<Order>;
   /**  Delete multiple Order items by ID.  */
   deleteOrders?: Maybe<Array<Maybe<Order>>>;
+  /**  Create a single Brand item.  */
+  createBrand?: Maybe<Brand>;
+  /**  Create multiple Brand items.  */
+  createBrands?: Maybe<Array<Maybe<Brand>>>;
+  /**  Update a single Brand item by ID.  */
+  updateBrand?: Maybe<Brand>;
+  /**  Update multiple Brand items by ID.  */
+  updateBrands?: Maybe<Array<Maybe<Brand>>>;
+  /**  Delete a single Brand item by ID.  */
+  deleteBrand?: Maybe<Brand>;
+  /**  Delete multiple Brand items by ID.  */
+  deleteBrands?: Maybe<Array<Maybe<Brand>>>;
+  /**  Create a single TipoDePrenda item.  */
+  createTipoDePrenda?: Maybe<TipoDePrenda>;
+  /**  Create multiple TipoDePrenda items.  */
+  createTipoDePrendas?: Maybe<Array<Maybe<TipoDePrenda>>>;
+  /**  Update a single TipoDePrenda item by ID.  */
+  updateTipoDePrenda?: Maybe<TipoDePrenda>;
+  /**  Update multiple TipoDePrenda items by ID.  */
+  updateTipoDePrendas?: Maybe<Array<Maybe<TipoDePrenda>>>;
+  /**  Delete a single TipoDePrenda item by ID.  */
+  deleteTipoDePrenda?: Maybe<TipoDePrenda>;
+  /**  Delete multiple TipoDePrenda items by ID.  */
+  deleteTipoDePrendas?: Maybe<Array<Maybe<TipoDePrenda>>>;
   authenticateUserWithPassword: UserAuthenticationWithPasswordResult;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   endSession: Scalars['Boolean'];
@@ -594,6 +750,68 @@ export type MutationDeleteOrderArgs = {
 
 
 export type MutationDeleteOrdersArgs = {
+  ids?: Maybe<Array<Scalars['ID']>>;
+};
+
+
+export type MutationCreateBrandArgs = {
+  data?: Maybe<BrandCreateInput>;
+};
+
+
+export type MutationCreateBrandsArgs = {
+  data?: Maybe<Array<Maybe<BrandsCreateInput>>>;
+};
+
+
+export type MutationUpdateBrandArgs = {
+  id: Scalars['ID'];
+  data?: Maybe<BrandUpdateInput>;
+};
+
+
+export type MutationUpdateBrandsArgs = {
+  data?: Maybe<Array<Maybe<BrandsUpdateInput>>>;
+};
+
+
+export type MutationDeleteBrandArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteBrandsArgs = {
+  ids?: Maybe<Array<Scalars['ID']>>;
+};
+
+
+export type MutationCreateTipoDePrendaArgs = {
+  data?: Maybe<TipoDePrendaCreateInput>;
+};
+
+
+export type MutationCreateTipoDePrendasArgs = {
+  data?: Maybe<Array<Maybe<TipoDePrendasCreateInput>>>;
+};
+
+
+export type MutationUpdateTipoDePrendaArgs = {
+  id: Scalars['ID'];
+  data?: Maybe<TipoDePrendaUpdateInput>;
+};
+
+
+export type MutationUpdateTipoDePrendasArgs = {
+  data?: Maybe<Array<Maybe<TipoDePrendasUpdateInput>>>;
+};
+
+
+export type MutationDeleteTipoDePrendaArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteTipoDePrendasArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
 
@@ -972,10 +1190,10 @@ export type Product = {
   _imagenMeta?: Maybe<_QueryMeta>;
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
-  tipoDePrenda?: Maybe<Scalars['String']>;
+  tipoDePrenda?: Maybe<TipoDePrenda>;
   stock: Array<Stock>;
   _stockMeta?: Maybe<_QueryMeta>;
-  marca?: Maybe<Scalars['String']>;
+  marca?: Maybe<Brand>;
 };
 
 
@@ -1029,9 +1247,9 @@ export type ProductCreateInput = {
   imagen?: Maybe<ProductImageRelateToManyInput>;
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
-  tipoDePrenda?: Maybe<Scalars['String']>;
+  tipoDePrenda?: Maybe<TipoDePrendaRelateToOneInput>;
   stock?: Maybe<StockRelateToManyInput>;
-  marca?: Maybe<Scalars['String']>;
+  marca?: Maybe<BrandRelateToOneInput>;
 };
 
 /**  A keystone list  */
@@ -1107,6 +1325,13 @@ export type ProductImagesUpdateInput = {
   data?: Maybe<ProductImageUpdateInput>;
 };
 
+export type ProductRelateToManyInput = {
+  create?: Maybe<Array<Maybe<ProductCreateInput>>>;
+  connect?: Maybe<Array<Maybe<ProductWhereUniqueInput>>>;
+  disconnect?: Maybe<Array<Maybe<ProductWhereUniqueInput>>>;
+  disconnectAll?: Maybe<Scalars['Boolean']>;
+};
+
 export type ProductRelateToOneInput = {
   create?: Maybe<ProductCreateInput>;
   connect?: Maybe<ProductWhereUniqueInput>;
@@ -1121,9 +1346,9 @@ export type ProductUpdateInput = {
   imagen?: Maybe<ProductImageRelateToManyInput>;
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
-  tipoDePrenda?: Maybe<Scalars['String']>;
+  tipoDePrenda?: Maybe<TipoDePrendaRelateToOneInput>;
   stock?: Maybe<StockRelateToManyInput>;
-  marca?: Maybe<Scalars['String']>;
+  marca?: Maybe<BrandRelateToOneInput>;
 };
 
 export type ProductWhereInput = {
@@ -1209,20 +1434,16 @@ export type ProductWhereInput = {
   precio_gte?: Maybe<Scalars['Int']>;
   precio_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   precio_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  tipoDePrenda?: Maybe<Scalars['String']>;
-  tipoDePrenda_not?: Maybe<Scalars['String']>;
-  tipoDePrenda_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  tipoDePrenda_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  tipoDePrenda?: Maybe<TipoDePrendaWhereInput>;
+  tipoDePrenda_is_null?: Maybe<Scalars['Boolean']>;
   /**  condition must be true for all nodes  */
   stock_every?: Maybe<StockWhereInput>;
   /**  condition must be true for at least 1 node  */
   stock_some?: Maybe<StockWhereInput>;
   /**  condition must be false for all nodes  */
   stock_none?: Maybe<StockWhereInput>;
-  marca?: Maybe<Scalars['String']>;
-  marca_not?: Maybe<Scalars['String']>;
-  marca_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  marca_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  marca?: Maybe<BrandWhereInput>;
+  marca_is_null?: Maybe<Scalars['Boolean']>;
 };
 
 export type ProductWhereUniqueInput = {
@@ -1288,6 +1509,18 @@ export type Query = {
   Order?: Maybe<Order>;
   /**  Perform a meta-query on all Order items which match the where clause.  */
   _allOrdersMeta?: Maybe<_QueryMeta>;
+  /**  Search for all Brand items which match the where clause.  */
+  allBrands?: Maybe<Array<Maybe<Brand>>>;
+  /**  Search for the Brand item with the matching ID.  */
+  Brand?: Maybe<Brand>;
+  /**  Perform a meta-query on all Brand items which match the where clause.  */
+  _allBrandsMeta?: Maybe<_QueryMeta>;
+  /**  Search for all TipoDePrenda items which match the where clause.  */
+  allTipoDePrendas?: Maybe<Array<Maybe<TipoDePrenda>>>;
+  /**  Search for the TipoDePrenda item with the matching ID.  */
+  TipoDePrenda?: Maybe<TipoDePrenda>;
+  /**  Perform a meta-query on all TipoDePrenda items which match the where clause.  */
+  _allTipoDePrendasMeta?: Maybe<_QueryMeta>;
   authenticatedItem?: Maybe<AuthenticatedItem>;
   keystone: KeystoneMeta;
 };
@@ -1492,6 +1725,56 @@ export type Query_AllOrdersMetaArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+
+export type QueryAllBrandsArgs = {
+  where?: Maybe<BrandWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortBrandsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryBrandArgs = {
+  where: BrandWhereUniqueInput;
+};
+
+
+export type Query_AllBrandsMetaArgs = {
+  where?: Maybe<BrandWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortBrandsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAllTipoDePrendasArgs = {
+  where?: Maybe<TipoDePrendaWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortTipoDePrendasBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryTipoDePrendaArgs = {
+  where: TipoDePrendaWhereUniqueInput;
+};
+
+
+export type Query_AllTipoDePrendasMetaArgs = {
+  where?: Maybe<TipoDePrendaWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortTipoDePrendasBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
 /**  A keystone list  */
 export type Role = {
   __typename?: 'Role';
@@ -1620,6 +1903,17 @@ export type RolesUpdateInput = {
   data?: Maybe<RoleUpdateInput>;
 };
 
+export enum SortBrandsBy {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  MarcaAsc = 'marca_ASC',
+  MarcaDesc = 'marca_DESC',
+  TipoDePrendaAsc = 'tipoDePrenda_ASC',
+  TipoDePrendaDesc = 'tipoDePrenda_DESC',
+  ProductoAsc = 'producto_ASC',
+  ProductoDesc = 'producto_DESC'
+}
+
 export enum SortCartItemsBy {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -1745,6 +2039,15 @@ export enum SortStocksBy {
   CantidadTalle6Desc = 'cantidadTalle6_DESC',
   CantidadTalle7Asc = 'cantidadTalle7_ASC',
   CantidadTalle7Desc = 'cantidadTalle7_DESC'
+}
+
+export enum SortTipoDePrendasBy {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  TipoAsc = 'tipo_ASC',
+  TipoDesc = 'tipo_DESC',
+  ProductoAsc = 'producto_ASC',
+  ProductoDesc = 'producto_DESC'
 }
 
 export enum SortUsersBy {
@@ -1919,6 +2222,113 @@ export type StocksCreateInput = {
 export type StocksUpdateInput = {
   id: Scalars['ID'];
   data?: Maybe<StockUpdateInput>;
+};
+
+/**  A keystone list  */
+export type TipoDePrenda = {
+  __typename?: 'TipoDePrenda';
+  id: Scalars['ID'];
+  label?: Maybe<Scalars['String']>;
+  tipo?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  producto: Array<Product>;
+  _productoMeta?: Maybe<_QueryMeta>;
+};
+
+
+/**  A keystone list  */
+export type TipoDePrendaProductoArgs = {
+  where?: Maybe<ProductWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortProductsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+/**  A keystone list  */
+export type TipoDePrenda_ProductoMetaArgs = {
+  where?: Maybe<ProductWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortProductsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+export type TipoDePrendaCreateInput = {
+  tipo?: Maybe<Scalars['String']>;
+  producto?: Maybe<ProductRelateToManyInput>;
+};
+
+export type TipoDePrendaRelateToManyInput = {
+  create?: Maybe<Array<Maybe<TipoDePrendaCreateInput>>>;
+  connect?: Maybe<Array<Maybe<TipoDePrendaWhereUniqueInput>>>;
+  disconnect?: Maybe<Array<Maybe<TipoDePrendaWhereUniqueInput>>>;
+  disconnectAll?: Maybe<Scalars['Boolean']>;
+};
+
+export type TipoDePrendaRelateToOneInput = {
+  create?: Maybe<TipoDePrendaCreateInput>;
+  connect?: Maybe<TipoDePrendaWhereUniqueInput>;
+  disconnect?: Maybe<TipoDePrendaWhereUniqueInput>;
+  disconnectAll?: Maybe<Scalars['Boolean']>;
+};
+
+export type TipoDePrendaUpdateInput = {
+  tipo?: Maybe<Scalars['String']>;
+  producto?: Maybe<ProductRelateToManyInput>;
+};
+
+export type TipoDePrendaWhereInput = {
+  AND?: Maybe<Array<Maybe<TipoDePrendaWhereInput>>>;
+  OR?: Maybe<Array<Maybe<TipoDePrendaWhereInput>>>;
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_lt?: Maybe<Scalars['ID']>;
+  id_lte?: Maybe<Scalars['ID']>;
+  id_gt?: Maybe<Scalars['ID']>;
+  id_gte?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  tipo?: Maybe<Scalars['String']>;
+  tipo_not?: Maybe<Scalars['String']>;
+  tipo_contains?: Maybe<Scalars['String']>;
+  tipo_not_contains?: Maybe<Scalars['String']>;
+  tipo_starts_with?: Maybe<Scalars['String']>;
+  tipo_not_starts_with?: Maybe<Scalars['String']>;
+  tipo_ends_with?: Maybe<Scalars['String']>;
+  tipo_not_ends_with?: Maybe<Scalars['String']>;
+  tipo_i?: Maybe<Scalars['String']>;
+  tipo_not_i?: Maybe<Scalars['String']>;
+  tipo_contains_i?: Maybe<Scalars['String']>;
+  tipo_not_contains_i?: Maybe<Scalars['String']>;
+  tipo_starts_with_i?: Maybe<Scalars['String']>;
+  tipo_not_starts_with_i?: Maybe<Scalars['String']>;
+  tipo_ends_with_i?: Maybe<Scalars['String']>;
+  tipo_not_ends_with_i?: Maybe<Scalars['String']>;
+  tipo_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  tipo_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /**  condition must be true for all nodes  */
+  producto_every?: Maybe<ProductWhereInput>;
+  /**  condition must be true for at least 1 node  */
+  producto_some?: Maybe<ProductWhereInput>;
+  /**  condition must be false for all nodes  */
+  producto_none?: Maybe<ProductWhereInput>;
+};
+
+export type TipoDePrendaWhereUniqueInput = {
+  id: Scalars['ID'];
+};
+
+export type TipoDePrendasCreateInput = {
+  data?: Maybe<TipoDePrendaCreateInput>;
+};
+
+export type TipoDePrendasUpdateInput = {
+  id: Scalars['ID'];
+  data?: Maybe<TipoDePrendaUpdateInput>;
 };
 
 
@@ -2150,6 +2560,23 @@ export type _QueryMeta = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type AllBrandsQueryVariables = Exact<{
+  tipoDePrenda?: Maybe<Scalars['String']>;
+}>;
+
+
+export type AllBrandsQuery = (
+  { __typename?: 'Query' }
+  & { allBrands?: Maybe<Array<Maybe<(
+    { __typename?: 'Brand' }
+    & Pick<Brand, 'marca' | 'slug' | 'id'>
+    & { tipoDePrenda: Array<(
+      { __typename?: 'TipoDePrenda' }
+      & Pick<TipoDePrenda, 'id' | 'tipo'>
+    )> }
+  )>>> }
+);
+
 export type AllCorseteriaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2157,8 +2584,14 @@ export type AllCorseteriaQuery = (
   { __typename?: 'Query' }
   & { allProducts?: Maybe<Array<Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
-    & { stock: Array<(
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio'>
+    & { tipoDePrenda?: Maybe<(
+      { __typename?: 'TipoDePrenda' }
+      & Pick<TipoDePrenda, 'id' | 'tipo'>
+    )>, marca?: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'marca'>
+    )>, stock: Array<(
       { __typename?: 'Stock' }
       & Pick<Stock, 'id' | 'color'>
     )>, imagen: Array<(
@@ -2179,8 +2612,14 @@ export type AllLenceriaQuery = (
   { __typename?: 'Query' }
   & { allProducts?: Maybe<Array<Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
-    & { stock: Array<(
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio'>
+    & { tipoDePrenda?: Maybe<(
+      { __typename?: 'TipoDePrenda' }
+      & Pick<TipoDePrenda, 'id' | 'tipo'>
+    )>, marca?: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'marca'>
+    )>, stock: Array<(
       { __typename?: 'Stock' }
       & Pick<Stock, 'id' | 'color'>
     )>, imagen: Array<(
@@ -2201,8 +2640,14 @@ export type AllProductsQuery = (
   { __typename?: 'Query' }
   & { allProducts?: Maybe<Array<Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
-    & { stock: Array<(
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio'>
+    & { tipoDePrenda?: Maybe<(
+      { __typename?: 'TipoDePrenda' }
+      & Pick<TipoDePrenda, 'id' | 'tipo'>
+    )>, marca?: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'marca'>
+    )>, stock: Array<(
       { __typename?: 'Stock' }
       & Pick<Stock, 'id' | 'color'>
     )>, imagen: Array<(
@@ -2239,8 +2684,14 @@ export type ProductByIdQuery = (
   { __typename?: 'Query' }
   & { Product?: Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'descripcion' | 'precio' | 'marca' | 'tipoDePrenda'>
-    & { stock: Array<(
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'descripcion' | 'precio'>
+    & { marca?: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'marca'>
+    )>, tipoDePrenda?: Maybe<(
+      { __typename?: 'TipoDePrenda' }
+      & Pick<TipoDePrenda, 'id' | 'tipo'>
+    )>, stock: Array<(
       { __typename?: 'Stock' }
       & Pick<Stock, 'id' | 'color' | 'cantidadTalle0' | 'cantidadTalle1' | 'cantidadTalle2' | 'cantidadTalle3' | 'cantidadTalle4' | 'cantidadTalle5' | 'cantidadTalle6' | 'cantidadTalle7'>
     )>, imagen: Array<(
@@ -2258,6 +2709,7 @@ export type ProductsPerPageQueryVariables = Exact<{
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   tipoDePrenda?: Maybe<Scalars['String']>;
+  marca?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -2265,8 +2717,14 @@ export type ProductsPerPageQuery = (
   { __typename?: 'Query' }
   & { allProducts?: Maybe<Array<Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
-    & { stock: Array<(
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio'>
+    & { tipoDePrenda?: Maybe<(
+      { __typename?: 'TipoDePrenda' }
+      & Pick<TipoDePrenda, 'id' | 'tipo'>
+    )>, marca?: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'marca'>
+    )>, stock: Array<(
       { __typename?: 'Stock' }
       & Pick<Stock, 'id' | 'color'>
     )>, imagen: Array<(
@@ -2289,8 +2747,14 @@ export type ProductByBrandQuery = (
   { __typename?: 'Query' }
   & { allProducts?: Maybe<Array<Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio' | 'tipoDePrenda' | 'marca'>
-    & { stock: Array<(
+    & Pick<Product, 'id' | 'nombre' | 'articulo' | 'slug' | 'descripcion' | 'precio'>
+    & { tipoDePrenda?: Maybe<(
+      { __typename?: 'TipoDePrenda' }
+      & Pick<TipoDePrenda, 'id' | 'tipo'>
+    )>, marca?: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'marca'>
+    )>, stock: Array<(
       { __typename?: 'Stock' }
       & Pick<Stock, 'id' | 'color'>
     )>, imagen: Array<(
@@ -2305,17 +2769,67 @@ export type ProductByBrandQuery = (
 );
 
 
+export const AllBrandsDocument = gql`
+    query allBrands($tipoDePrenda: String) {
+  allBrands(where: {tipoDePrenda_some: {tipo_i: $tipoDePrenda}}) {
+    marca
+    slug
+    id
+    tipoDePrenda {
+      id
+      tipo
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllBrandsQuery__
+ *
+ * To run a query within a React component, call `useAllBrandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllBrandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllBrandsQuery({
+ *   variables: {
+ *      tipoDePrenda: // value for 'tipoDePrenda'
+ *   },
+ * });
+ */
+export function useAllBrandsQuery(baseOptions?: Apollo.QueryHookOptions<AllBrandsQuery, AllBrandsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllBrandsQuery, AllBrandsQueryVariables>(AllBrandsDocument, options);
+      }
+export function useAllBrandsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllBrandsQuery, AllBrandsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllBrandsQuery, AllBrandsQueryVariables>(AllBrandsDocument, options);
+        }
+export type AllBrandsQueryHookResult = ReturnType<typeof useAllBrandsQuery>;
+export type AllBrandsLazyQueryHookResult = ReturnType<typeof useAllBrandsLazyQuery>;
+export type AllBrandsQueryResult = Apollo.QueryResult<AllBrandsQuery, AllBrandsQueryVariables>;
+export function refetchAllBrandsQuery(variables?: AllBrandsQueryVariables) {
+      return { query: AllBrandsDocument, variables: variables }
+    }
 export const AllCorseteriaDocument = gql`
     query AllCorseteria {
-  allProducts(where: {tipoDePrenda: "Corseteria"}) {
+  allProducts(where: {tipoDePrenda: {tipo_i: "corseteria"}}) {
     id
     nombre
     articulo
     slug
     descripcion
     precio
-    tipoDePrenda
-    marca
+    tipoDePrenda {
+      id
+      tipo
+    }
+    marca {
+      id
+      marca
+    }
     stock {
       id
       color
@@ -2361,15 +2875,21 @@ export function refetchAllCorseteriaQuery(variables?: AllCorseteriaQueryVariable
     }
 export const AllLenceriaDocument = gql`
     query AllLenceria {
-  allProducts(where: {tipoDePrenda: "Lenceria"}) {
+  allProducts(where: {tipoDePrenda: {tipo_i: "lenceria"}}) {
     id
     nombre
     articulo
     slug
     descripcion
     precio
-    tipoDePrenda
-    marca
+    tipoDePrenda {
+      id
+      tipo
+    }
+    marca {
+      id
+      marca
+    }
     stock {
       id
       color
@@ -2422,8 +2942,14 @@ export const AllProductsDocument = gql`
     slug
     descripcion
     precio
-    tipoDePrenda
-    marca
+    tipoDePrenda {
+      id
+      tipo
+    }
+    marca {
+      id
+      marca
+    }
     stock {
       id
       color
@@ -2469,7 +2995,9 @@ export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
     }
 export const PaginationDocument = gql`
     query Pagination($tipoDePrenda: String, $marca: String) {
-  _allProductsMeta(where: {tipoDePrenda: $tipoDePrenda, marca: $marca}) {
+  _allProductsMeta(
+    where: {tipoDePrenda: {tipo_i: $tipoDePrenda}, marca: {marca_i: $marca}}
+  ) {
     count
   }
 }
@@ -2514,8 +3042,14 @@ export const ProductByIdDocument = gql`
     articulo
     descripcion
     precio
-    marca
-    tipoDePrenda
+    marca {
+      id
+      marca
+    }
+    tipoDePrenda {
+      id
+      tipo
+    }
     stock {
       id
       color
@@ -2569,16 +3103,26 @@ export function refetchProductByIdQuery(variables?: ProductByIdQueryVariables) {
       return { query: ProductByIdDocument, variables: variables }
     }
 export const ProductsPerPageDocument = gql`
-    query ProductsPerPage($skip: Int = 0, $first: Int, $tipoDePrenda: String) {
-  allProducts(first: $first, skip: $skip, where: {tipoDePrenda: $tipoDePrenda}) {
+    query ProductsPerPage($skip: Int = 0, $first: Int, $tipoDePrenda: String, $marca: String) {
+  allProducts(
+    first: $first
+    skip: $skip
+    where: {tipoDePrenda: {tipo_i: $tipoDePrenda}, marca: {marca_i: $marca}}
+  ) {
     id
     nombre
     articulo
     slug
     descripcion
     precio
-    tipoDePrenda
-    marca
+    tipoDePrenda {
+      id
+      tipo
+    }
+    marca {
+      id
+      marca
+    }
     stock {
       id
       color
@@ -2608,6 +3152,7 @@ export const ProductsPerPageDocument = gql`
  *      skip: // value for 'skip'
  *      first: // value for 'first'
  *      tipoDePrenda: // value for 'tipoDePrenda'
+ *      marca: // value for 'marca'
  *   },
  * });
  */
@@ -2627,15 +3172,21 @@ export function refetchProductsPerPageQuery(variables?: ProductsPerPageQueryVari
     }
 export const ProductByBrandDocument = gql`
     query productByBrand($marca: String!) {
-  allProducts(where: {marca: $marca}) {
+  allProducts(where: {marca: {marca_i: $marca}}) {
     id
     nombre
     articulo
     slug
     descripcion
     precio
-    tipoDePrenda
-    marca
+    tipoDePrenda {
+      id
+      tipo
+    }
+    marca {
+      id
+      marca
+    }
     stock {
       id
       color
@@ -2680,6 +3231,17 @@ export type ProductByBrandQueryResult = Apollo.QueryResult<ProductByBrandQuery, 
 export function refetchProductByBrandQuery(variables?: ProductByBrandQueryVariables) {
       return { query: ProductByBrandDocument, variables: variables }
     }
+export type BrandKeySpecifier = ('id' | 'label' | 'marca' | 'slug' | 'tipoDePrenda' | '_tipoDePrendaMeta' | 'producto' | '_productoMeta' | BrandKeySpecifier)[];
+export type BrandFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	label?: FieldPolicy<any> | FieldReadFunction<any>,
+	marca?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
+	tipoDePrenda?: FieldPolicy<any> | FieldReadFunction<any>,
+	_tipoDePrendaMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	producto?: FieldPolicy<any> | FieldReadFunction<any>,
+	_productoMeta?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type CartItemKeySpecifier = ('id' | 'cantidad' | 'producto' | 'usuario' | CartItemKeySpecifier)[];
 export type CartItemFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2757,7 +3319,7 @@ export type KeystoneMetaKeySpecifier = ('adminMeta' | KeystoneMetaKeySpecifier)[
 export type KeystoneMetaFieldPolicy = {
 	adminMeta?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createStock' | 'createStocks' | 'updateStock' | 'updateStocks' | 'deleteStock' | 'deleteStocks' | 'createRole' | 'createRoles' | 'updateRole' | 'updateRoles' | 'deleteRole' | 'deleteRoles' | 'createOrderItem' | 'createOrderItems' | 'updateOrderItem' | 'updateOrderItems' | 'deleteOrderItem' | 'deleteOrderItems' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'createOrder' | 'createOrders' | 'updateOrder' | 'updateOrders' | 'deleteOrder' | 'deleteOrders' | 'authenticateUserWithPassword' | 'createInitialUser' | 'endSession' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createStock' | 'createStocks' | 'updateStock' | 'updateStocks' | 'deleteStock' | 'deleteStocks' | 'createRole' | 'createRoles' | 'updateRole' | 'updateRoles' | 'deleteRole' | 'deleteRoles' | 'createOrderItem' | 'createOrderItems' | 'updateOrderItem' | 'updateOrderItems' | 'deleteOrderItem' | 'deleteOrderItems' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'createOrder' | 'createOrders' | 'updateOrder' | 'updateOrders' | 'deleteOrder' | 'deleteOrders' | 'createBrand' | 'createBrands' | 'updateBrand' | 'updateBrands' | 'deleteBrand' | 'deleteBrands' | 'createTipoDePrenda' | 'createTipoDePrendas' | 'updateTipoDePrenda' | 'updateTipoDePrendas' | 'deleteTipoDePrenda' | 'deleteTipoDePrendas' | 'authenticateUserWithPassword' | 'createInitialUser' | 'endSession' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	createUsers?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2807,6 +3369,18 @@ export type MutationFieldPolicy = {
 	updateOrders?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteOrder?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteOrders?: FieldPolicy<any> | FieldReadFunction<any>,
+	createBrand?: FieldPolicy<any> | FieldReadFunction<any>,
+	createBrands?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateBrand?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateBrands?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteBrand?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteBrands?: FieldPolicy<any> | FieldReadFunction<any>,
+	createTipoDePrenda?: FieldPolicy<any> | FieldReadFunction<any>,
+	createTipoDePrendas?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateTipoDePrenda?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateTipoDePrendas?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteTipoDePrenda?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteTipoDePrendas?: FieldPolicy<any> | FieldReadFunction<any>,
 	authenticateUserWithPassword?: FieldPolicy<any> | FieldReadFunction<any>,
 	createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	endSession?: FieldPolicy<any> | FieldReadFunction<any>
@@ -2862,7 +3436,7 @@ export type ProductImageFieldPolicy = {
 	image?: FieldPolicy<any> | FieldReadFunction<any>,
 	altText?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | 'allStocks' | 'Stock' | '_allStocksMeta' | 'allRoles' | 'Role' | '_allRolesMeta' | 'allOrderItems' | 'OrderItem' | '_allOrderItemsMeta' | 'allCartItems' | 'CartItem' | '_allCartItemsMeta' | 'allOrders' | 'Order' | '_allOrdersMeta' | 'authenticatedItem' | 'keystone' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | 'allStocks' | 'Stock' | '_allStocksMeta' | 'allRoles' | 'Role' | '_allRolesMeta' | 'allOrderItems' | 'OrderItem' | '_allOrderItemsMeta' | 'allCartItems' | 'CartItem' | '_allCartItemsMeta' | 'allOrders' | 'Order' | '_allOrdersMeta' | 'allBrands' | 'Brand' | '_allBrandsMeta' | 'allTipoDePrendas' | 'TipoDePrenda' | '_allTipoDePrendasMeta' | 'authenticatedItem' | 'keystone' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	allUsers?: FieldPolicy<any> | FieldReadFunction<any>,
 	User?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2888,6 +3462,12 @@ export type QueryFieldPolicy = {
 	allOrders?: FieldPolicy<any> | FieldReadFunction<any>,
 	Order?: FieldPolicy<any> | FieldReadFunction<any>,
 	_allOrdersMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	allBrands?: FieldPolicy<any> | FieldReadFunction<any>,
+	Brand?: FieldPolicy<any> | FieldReadFunction<any>,
+	_allBrandsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	allTipoDePrendas?: FieldPolicy<any> | FieldReadFunction<any>,
+	TipoDePrenda?: FieldPolicy<any> | FieldReadFunction<any>,
+	_allTipoDePrendasMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	authenticatedItem?: FieldPolicy<any> | FieldReadFunction<any>,
 	keystone?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -2918,6 +3498,15 @@ export type StockFieldPolicy = {
 	cantidadTalle6?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidadTalle7?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type TipoDePrendaKeySpecifier = ('id' | 'label' | 'tipo' | 'slug' | 'producto' | '_productoMeta' | TipoDePrendaKeySpecifier)[];
+export type TipoDePrendaFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	label?: FieldPolicy<any> | FieldReadFunction<any>,
+	tipo?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
+	producto?: FieldPolicy<any> | FieldReadFunction<any>,
+	_productoMeta?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type UserKeySpecifier = ('id' | 'nombre' | 'apellido' | 'telefono' | 'email' | 'password_is_set' | 'rol' | 'cart' | '_cartMeta' | 'ordenes' | '_ordenesMeta' | UserKeySpecifier)[];
 export type UserFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2947,6 +3536,10 @@ export type _QueryMetaFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TypedTypePolicies = TypePolicies & {
+	Brand?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | BrandKeySpecifier | (() => undefined | BrandKeySpecifier),
+		fields?: BrandFieldPolicy,
+	},
 	CartItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CartItemKeySpecifier | (() => undefined | CartItemKeySpecifier),
 		fields?: CartItemFieldPolicy,
@@ -3018,6 +3611,10 @@ export type TypedTypePolicies = TypePolicies & {
 	Stock?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | StockKeySpecifier | (() => undefined | StockKeySpecifier),
 		fields?: StockFieldPolicy,
+	},
+	TipoDePrenda?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | TipoDePrendaKeySpecifier | (() => undefined | TipoDePrendaKeySpecifier),
+		fields?: TipoDePrendaFieldPolicy,
 	},
 	User?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | UserKeySpecifier | (() => undefined | UserKeySpecifier),

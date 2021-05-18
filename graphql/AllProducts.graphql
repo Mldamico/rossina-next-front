@@ -6,8 +6,14 @@ query AllProducts {
     slug
     descripcion
     precio
-    tipoDePrenda
-    marca
+    tipoDePrenda {
+      id
+      tipo
+    }
+    marca {
+      id
+      marca
+    }
     stock {
       id
       color

@@ -1,0 +1,11 @@
+query allBrands($tipoDePrenda: String) {
+  allBrands(where: { tipoDePrenda_some: { tipo_i: $tipoDePrenda } }) {
+    marca
+    slug
+    id
+    tipoDePrenda {
+      id
+      tipo
+    }
+  }
+}

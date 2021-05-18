@@ -6,11 +6,13 @@ import {
   useAllProductsQuery,
   useProductsPerPageQuery,
 } from '../../types/generated-queries';
+
 import { Product } from './Product';
 import { LoadingSpinner } from '../layout/LoadingSpinner';
 import { Pagination } from '../layout/Pagination';
 import { perPage } from '../../config';
 import { ProductsContainer } from '../layout/ProductsContainer';
+import { useRouter } from 'next/router';
 
 const ProductsStyles = styled.main`
   display: grid;
@@ -19,8 +21,13 @@ const ProductsStyles = styled.main`
 `;
 
 export const Products = ({ page }) => {
+  const router = useRouter();
   const { data, error, loading } = useProductsPerPageQuery({
-    variables: { skip: page * perPage - perPage, first: perPage },
+    variables: {
+      skip: page * perPage - perPage,
+      first: perPage,
+      ...router.query,
+    },
   });
 
   if (loading) return <LoadingSpinner />;
@@ -29,7 +36,7 @@ export const Products = ({ page }) => {
     <>
       <ProductsContainer page={page}>
         <ProductsStyles>
-          {data?.allProducts?.map((product) => (
+          {data?.allProducts?.map((product: productType) => (
             <Product key={product.id} product={product} />
           ))}
         </ProductsStyles>

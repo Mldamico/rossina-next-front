@@ -8,8 +8,19 @@ export const Navegation = () => {
       <NavigationStyles>
         <Link href='/'>Home</Link>
         <Link href='/productos'>Productos</Link>
-        <Link href='/corseteria'>Corseteria</Link>
-        <Link href='/lenceria'>Lenceria</Link>
+        <Link
+          href={{
+            pathname: '/productos',
+            query: { tipoDePrenda: 'Corseteria' },
+          }}
+        >
+          Corseteria
+        </Link>
+        <Link
+          href={{ pathname: '/productos', query: { tipoDePrenda: 'Lenceria' } }}
+        >
+          Lenceria
+        </Link>
         <Link href='/productos'>Maternal</Link>
       </NavigationStyles>
     </>

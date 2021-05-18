@@ -10,23 +10,17 @@ const ProductsContainerStyles = styled.div`
 export const ProductsContainer = ({
   children,
   page,
-  tipoDePrenda,
   filtros,
 }: {
   children: any;
   page: number;
-  tipoDePrenda?: string;
-  filtros?: Object;
+  filtros?: { tipoDePrenda?: string; marca?: string };
 }) => {
   return (
     <ProductsContainerStyles>
-      <Pagination
-        page={Number(page) || 1}
-        tipoDePrenda={tipoDePrenda}
-        filtros={filtros}
-      />
+      <Pagination page={Number(page) || 1} />
       {children}
-      <Pagination page={Number(page) || 1} tipoDePrenda={tipoDePrenda} />
+      <Pagination page={Number(page) || 1} />
     </ProductsContainerStyles>
   );
 };

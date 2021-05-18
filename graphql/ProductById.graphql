@@ -5,8 +5,14 @@ query productById($id: ID!) {
     articulo
     descripcion
     precio
-    marca
-    tipoDePrenda
+    marca {
+      id
+      marca
+    }
+    tipoDePrenda {
+      id
+      tipo
+    }
     stock {
       id
       color
