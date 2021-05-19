@@ -9,6 +9,7 @@ import {
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { HeaderStyles } from './styles/HeaderStyles';
+import { Search } from '../layout/search';
 
 export const Header = () => {
   return (
@@ -41,6 +42,7 @@ export const Header = () => {
         </div>
         <Navegation />
       </HeaderStyles>
+      {/* <Search /> */}
     </>
   );
 };

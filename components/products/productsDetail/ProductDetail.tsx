@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { useProductByIdQuery } from '../../../types/generated-queries';
+import {
+  useProductByIdQuery,
+  Product as productType,
+} from '../../../types/generated-queries';
+
 import {
   ProductDetailStyles,
   ProductsDetailContainerStyles,
@@ -8,6 +12,7 @@ import Link from 'next/link';
 import { formatTalles } from '../../../lib/formatTalles';
 import { ProductImage } from './ProductImage';
 import { useRouter } from 'next/router';
+import { Product } from '../Product';
 export const ProductDetail = ({ productId }: { productId: string }) => {
   const router = useRouter();
   const [selectedColor, setSelectedColor] = useState('');
@@ -18,12 +23,12 @@ export const ProductDetail = ({ productId }: { productId: string }) => {
     variables: { id: productId },
   });
   if (loading) return <p>Cargando...</p>;
-  const { Product: product } = data;
+  const product = data?.Product as productType;
 
   const getTallesFromColor = (e) => {
     setSelectedColor(e.target.value);
 
-    product.stock.map((item) => {
+    product?.stock?.map((item) => {
       if (item.color === e.target.value) {
         const newArr = [];
         Object.keys(item)
@@ -35,7 +40,8 @@ export const ProductDetail = ({ productId }: { productId: string }) => {
             });
           });
         console.log(newArr);
-        formatTalles(newArr, product.marca);
+
+        formatTalles(newArr, product.marca.marca);
         setTalles(newArr);
       }
     });
@@ -60,7 +66,7 @@ export const ProductDetail = ({ productId }: { productId: string }) => {
           <h3>Color:</h3>
           <select value={selectedColor} onChange={getTallesFromColor}>
             <option>Selecciona un color</option>
-            {product.stock.map((unidad) => (
+            {product?.stock?.map((unidad) => (
               <option value={unidad.color} key={unidad.id}>
                 {unidad.color}
               </option>

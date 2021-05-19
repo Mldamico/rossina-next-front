@@ -9,6 +9,7 @@ export const Sidebar = () => {
   const { data, error, loading } = useAllBrandsQuery({
     variables: { ...router.query },
   });
+  console.log(data);
 
   return (
     <SidebarLayout>
@@ -34,6 +35,7 @@ export const Sidebar = () => {
             </Link>
             {data?.allBrands.map((brand) => (
               <Link
+                key={brand.id}
                 href={{
                   pathname: '/productos',
                   query: { ...router.query, marca: brand.marca },

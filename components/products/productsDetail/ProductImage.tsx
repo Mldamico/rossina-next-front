@@ -52,7 +52,7 @@ export const ProductImage = ({ product }: ProductProps) => {
         value={selectedImage}
         onChange={onChange}
       >
-        {product.imagen.map((img) => (
+        {product?.imagen?.map((img) => (
           <img
             className='carousel-image'
             src={img.image.publicUrlTransformed}
@@ -61,7 +61,7 @@ export const ProductImage = ({ product }: ProductProps) => {
           />
         ))}
       </Carousel>
-      {product.imagen.length > 1 && (
+      {product?.imagen?.length > 1 && (
         <Dots
           value={selectedImage}
           onChange={onChange}

@@ -9,12 +9,7 @@ export const Product = ({ product }: ProductProps) => {
   console.log(product);
   return (
     <ProductStyle>
-      <Link
-        href={{
-          pathname: `/producto/${product.slug}}`,
-          query: { id: product.id },
-        }}
-      >
+      <Link href={`/producto/${product.id}`}>
         <a>
           <div className='container'>
             <Image
