@@ -1,6 +1,6 @@
 import React from 'react';
 import { resetIdCounter, useCombobox } from 'downshift';
-import { DropDown, DropDownItem, SearchStyles } from './styles/Dropdown';
+import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 import { Product as productType } from '../../types/generated-queries';
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/router';
@@ -12,7 +12,9 @@ export const Search = () => {
     fetchPolicy: 'no-cache',
   });
 
-  const findItemsButChill = debounce(findItems, 350);
+  const findItemsButChill = React.useCallback(debounce(findItems, 350), [
+    findItems,
+  ]);
 
   resetIdCounter();
   const items = data?.searchTerms || [];
@@ -71,11 +73,11 @@ export const Search = () => {
               {item.nombre}
             </DropDownItem>
           ))}
-        {isOpen && !items.length && !loading && (
+        {isOpen && !items.length && !loading ? (
           <DropDownItem>
             Lo siento, no se encontro nada con el siguiente valor: ${inputValue}
           </DropDownItem>
-        )}
+        ) : null}
       </DropDown>
     </SearchStyles>
   );

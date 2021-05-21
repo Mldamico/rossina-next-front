@@ -19,8 +19,22 @@ export const Sidebar = () => {
       <h3>PRODUCTOS</h3>
       <div className='sidebar-link'>
         <Link href='/productos'>VER TODO</Link>
-        <Link href={{ query: { tipoDePrenda: 'Corseteria' } }}>CORSETERIA</Link>
-        <Link href={{ query: { tipoDePrenda: 'Lenceria' } }}>LENCERIA</Link>
+        <Link
+          href={{
+            pathname: '/productos',
+            query: { tipoDePrenda: 'Corseteria' },
+          }}
+        >
+          CORSETERIA
+        </Link>
+        <Link
+          href={{
+            pathname: '/productos',
+            query: { tipoDePrenda: 'Lenceria' },
+          }}
+        >
+          LENCERIA
+        </Link>
         <Link href='/productos'>MATERNAL</Link>
         <Link href='/productos'>HOMBRES</Link>
         <Link href='/productos'>MEDIAS</Link>
@@ -38,7 +52,7 @@ export const Sidebar = () => {
                 key={brand.id}
                 href={{
                   pathname: '/productos',
-                  query: { ...router.query, marca: brand.marca },
+                  query: { ...router.query, page: 1, marca: brand.marca },
                 }}
               >
                 {brand.marca}
