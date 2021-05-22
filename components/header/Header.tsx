@@ -7,11 +7,15 @@ import {
   faSearch,
   faMapMarkerAlt,
   faSignInAlt,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { HeaderStyles } from './styles/HeaderStyles';
 import { Search } from '../layout/Search';
+import { useUser } from '../../lib/useUser';
+import { SignOut } from '../auth/SignOut';
 
 export const Header = () => {
+  const user = useUser();
   return (
     <>
       <HeaderStyles>
@@ -30,10 +34,18 @@ export const Header = () => {
             <h1>Lenceria Rossina</h1>
           </div>
           <div className='header-section-right'>
-            <div className='header-section-item'>
-              <FontAwesomeIcon icon={faSignInAlt} size='2x' />
-              <Link href='/signin'>Registrarse | Entrar</Link>
-            </div>
+            {!user ? (
+              <div className='header-section-item'>
+                <FontAwesomeIcon icon={faSignInAlt} size='2x' />
+                <Link href='/auth/registrarse'>Registrarse | Entrar</Link>
+              </div>
+            ) : (
+              <div className='header-section-item'>
+                <FontAwesomeIcon icon={faSignOutAlt} size='2x' />
+                <SignOut />
+              </div>
+            )}
+
             <div className='header-section-item'>
               <FontAwesomeIcon icon={faCartPlus} size='2x' />
               <button type='button'>Cart</button>

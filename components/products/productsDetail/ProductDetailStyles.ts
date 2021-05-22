@@ -36,6 +36,9 @@ export const ProductDetailStyles = styled.section`
   }
 
   button {
+  }
+
+  .btn-add-cart {
     padding: 1rem 1rem;
     margin-top: 10rem;
     align-self: flex-end;

@@ -34,6 +34,7 @@ export const ProductDetail = ({ productId }: { productId: string }) => {
         Object.keys(item)
           .filter((key) => key.startsWith('cantidad') && item[key])
           .map((filteredItem) => {
+            console.log(filteredItem);
             newArr.push({
               talle: filteredItem,
               cantidad: item[filteredItem],
@@ -41,7 +42,12 @@ export const ProductDetail = ({ productId }: { productId: string }) => {
           });
         console.log(newArr);
 
-        formatTalles(newArr, product.marca.marca);
+        // // formatTalles(newArr, product.marca.marca);
+        Object.keys(item)
+          .filter((key) => key.startsWith('nombre') && item[key])
+          .map((filteredItem, i) => {
+            newArr[i].talle = item[filteredItem];
+          });
         setTalles(newArr);
       }
     });
@@ -89,7 +95,9 @@ export const ProductDetail = ({ productId }: { productId: string }) => {
             ))}
           </select>
 
-          <button type='button'>Agregar al Carrito</button>
+          <button className='btn-add-cart' type='button'>
+            Agregar al Carrito
+          </button>
         </div>
       </ProductDetailStyles>
     </ProductsDetailContainerStyles>

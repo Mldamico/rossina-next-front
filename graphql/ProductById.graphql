@@ -16,13 +16,19 @@ query productById($id: ID!) {
     stock {
       id
       color
-      cantidadTalle0
+      nombreTalle1
       cantidadTalle1
+      nombreTalle2
       cantidadTalle2
+      nombreTalle3
       cantidadTalle3
+      nombreTalle4
       cantidadTalle4
+      nombreTalle5
       cantidadTalle5
+      nombreTalle6
       cantidadTalle6
+      nombreTalle7
       cantidadTalle7
     }
     imagen {

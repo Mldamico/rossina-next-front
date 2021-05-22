@@ -1,4 +1,4 @@
-const tallesPerlea = {
+const tallesCorseteriaContorno = {
   cantidadTalle1: '34',
   cantidadTalle2: '36',
   cantidadTalle3: '38',
@@ -6,7 +6,7 @@ const tallesPerlea = {
   cantidadTalle5: '42',
 };
 
-const tallesSelu = {
+const tallesCorseteriaNumerico = {
   cantidadTalle0: '80',
   cantidadTalle1: '85',
   cantidadTalle2: '90',
@@ -14,6 +14,7 @@ const tallesSelu = {
   cantidadTalle4: '100',
   cantidadTalle5: '105',
   cantidadTalle6: '110',
+  cantidadTalle7: '115',
 };
 
 const tallesLenceriaNumerico = {
@@ -26,12 +27,11 @@ const tallesLenceriaNumerico = {
 };
 
 const tallesLenceriaLetras = {
-  cantidadTalle1: '1',
-  cantidadTalle2: '2',
-  cantidadTalle3: '3',
-  cantidadTalle4: '4',
-  cantidadTalle5: '5',
-  cantidadTalle6: '6',
+  cantidadTalle0: 'XS',
+  cantidadTalle1: 'S',
+  cantidadTalle2: 'M',
+  cantidadTalle3: 'L',
+  cantidadTalle4: 'XL',
 };
 
 const getTalleByMarca = (stock, marca) =>
@@ -43,10 +43,10 @@ export const formatTalles = (stock, marca) => {
   console.log(stock);
   switch (marca) {
     case 'Perlea':
-      getTalleByMarca(stock, tallesPerlea);
+      getTalleByMarca(stock, tallesCorseteriaContorno);
       break;
     case 'Selu':
-      getTalleByMarca(stock, tallesSelu);
+      getTalleByMarca(stock, tallesCorseteriaNumerico);
       break;
     case 'Delle Donne':
       getTalleByMarca(stock, tallesLenceriaNumerico);

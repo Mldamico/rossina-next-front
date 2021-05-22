@@ -502,6 +502,8 @@ export type Mutation = {
   deleteTipoDePrendas?: Maybe<Array<Maybe<TipoDePrenda>>>;
   authenticateUserWithPassword: UserAuthenticationWithPasswordResult;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
+  sendUserPasswordResetLink?: Maybe<SendUserPasswordResetLinkResult>;
+  redeemUserPasswordResetToken?: Maybe<RedeemUserPasswordResetTokenResult>;
   endSession: Scalars['Boolean'];
 };
 
@@ -824,6 +826,18 @@ export type MutationAuthenticateUserWithPasswordArgs = {
 
 export type MutationCreateInitialUserArgs = {
   data: CreateInitialUserInput;
+};
+
+
+export type MutationSendUserPasswordResetLinkArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationRedeemUserPasswordResetTokenArgs = {
+  email: Scalars['String'];
+  token: Scalars['String'];
+  password: Scalars['String'];
 };
 
 /**  A keystone list  */
@@ -1177,6 +1191,21 @@ export enum PasswordAuthErrorCode {
   SecretMismatch = 'SECRET_MISMATCH'
 }
 
+export enum PasswordResetRedemptionErrorCode {
+  Failure = 'FAILURE',
+  IdentityNotFound = 'IDENTITY_NOT_FOUND',
+  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES',
+  TokenNotSet = 'TOKEN_NOT_SET',
+  TokenMismatch = 'TOKEN_MISMATCH',
+  TokenExpired = 'TOKEN_EXPIRED',
+  TokenRedeemed = 'TOKEN_REDEEMED'
+}
+
+export enum PasswordResetRequestErrorCode {
+  IdentityNotFound = 'IDENTITY_NOT_FOUND',
+  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES'
+}
+
 /**  A keystone list  */
 export type Product = {
   __typename?: 'Product';
@@ -1191,6 +1220,7 @@ export type Product = {
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
   tipoDePrenda?: Maybe<TipoDePrenda>;
+  categoria?: Maybe<Scalars['String']>;
   stock: Array<Stock>;
   _stockMeta?: Maybe<_QueryMeta>;
   marca?: Maybe<Brand>;
@@ -1248,6 +1278,7 @@ export type ProductCreateInput = {
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
   tipoDePrenda?: Maybe<TipoDePrendaRelateToOneInput>;
+  categoria?: Maybe<Scalars['String']>;
   stock?: Maybe<StockRelateToManyInput>;
   marca?: Maybe<BrandRelateToOneInput>;
 };
@@ -1347,6 +1378,7 @@ export type ProductUpdateInput = {
   status?: Maybe<Scalars['String']>;
   precio?: Maybe<Scalars['Int']>;
   tipoDePrenda?: Maybe<TipoDePrendaRelateToOneInput>;
+  categoria?: Maybe<Scalars['String']>;
   stock?: Maybe<StockRelateToManyInput>;
   marca?: Maybe<BrandRelateToOneInput>;
 };
@@ -1436,6 +1468,10 @@ export type ProductWhereInput = {
   precio_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   tipoDePrenda?: Maybe<TipoDePrendaWhereInput>;
   tipoDePrenda_is_null?: Maybe<Scalars['Boolean']>;
+  categoria?: Maybe<Scalars['String']>;
+  categoria_not?: Maybe<Scalars['String']>;
+  categoria_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  categoria_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   /**  condition must be true for all nodes  */
   stock_every?: Maybe<StockWhereInput>;
   /**  condition must be true for at least 1 node  */
@@ -1522,6 +1558,7 @@ export type Query = {
   /**  Perform a meta-query on all TipoDePrenda items which match the where clause.  */
   _allTipoDePrendasMeta?: Maybe<_QueryMeta>;
   authenticatedItem?: Maybe<AuthenticatedItem>;
+  validateUserPasswordResetToken?: Maybe<ValidateUserPasswordResetTokenResult>;
   keystone: KeystoneMeta;
 };
 
@@ -1775,6 +1812,18 @@ export type Query_AllTipoDePrendasMetaArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+
+export type QueryValidateUserPasswordResetTokenArgs = {
+  email: Scalars['String'];
+  token: Scalars['String'];
+};
+
+export type RedeemUserPasswordResetTokenResult = {
+  __typename?: 'RedeemUserPasswordResetTokenResult';
+  code: PasswordResetRedemptionErrorCode;
+  message: Scalars['String'];
+};
+
 /**  A keystone list  */
 export type Role = {
   __typename?: 'Role';
@@ -1903,6 +1952,12 @@ export type RolesUpdateInput = {
   data?: Maybe<RoleUpdateInput>;
 };
 
+export type SendUserPasswordResetLinkResult = {
+  __typename?: 'SendUserPasswordResetLinkResult';
+  code: PasswordResetRequestErrorCode;
+  message: Scalars['String'];
+};
+
 export enum SortBrandsBy {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
@@ -1991,6 +2046,8 @@ export enum SortProductsBy {
   PrecioDesc = 'precio_DESC',
   TipoDePrendaAsc = 'tipoDePrenda_ASC',
   TipoDePrendaDesc = 'tipoDePrenda_DESC',
+  CategoriaAsc = 'categoria_ASC',
+  CategoriaDesc = 'categoria_DESC',
   StockAsc = 'stock_ASC',
   StockDesc = 'stock_DESC',
   MarcaAsc = 'marca_ASC',
@@ -2021,22 +2078,36 @@ export enum SortRolesBy {
 export enum SortStocksBy {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
+  ProductoAsc = 'producto_ASC',
+  ProductoDesc = 'producto_DESC',
   ColorAsc = 'color_ASC',
   ColorDesc = 'color_DESC',
-  CantidadTalle0Asc = 'cantidadTalle0_ASC',
-  CantidadTalle0Desc = 'cantidadTalle0_DESC',
+  NombreTalle1Asc = 'nombreTalle1_ASC',
+  NombreTalle1Desc = 'nombreTalle1_DESC',
   CantidadTalle1Asc = 'cantidadTalle1_ASC',
   CantidadTalle1Desc = 'cantidadTalle1_DESC',
+  NombreTalle2Asc = 'nombreTalle2_ASC',
+  NombreTalle2Desc = 'nombreTalle2_DESC',
   CantidadTalle2Asc = 'cantidadTalle2_ASC',
   CantidadTalle2Desc = 'cantidadTalle2_DESC',
+  NombreTalle3Asc = 'nombreTalle3_ASC',
+  NombreTalle3Desc = 'nombreTalle3_DESC',
   CantidadTalle3Asc = 'cantidadTalle3_ASC',
   CantidadTalle3Desc = 'cantidadTalle3_DESC',
+  NombreTalle4Asc = 'nombreTalle4_ASC',
+  NombreTalle4Desc = 'nombreTalle4_DESC',
   CantidadTalle4Asc = 'cantidadTalle4_ASC',
   CantidadTalle4Desc = 'cantidadTalle4_DESC',
+  NombreTalle5Asc = 'nombreTalle5_ASC',
+  NombreTalle5Desc = 'nombreTalle5_DESC',
   CantidadTalle5Asc = 'cantidadTalle5_ASC',
   CantidadTalle5Desc = 'cantidadTalle5_DESC',
+  NombreTalle6Asc = 'nombreTalle6_ASC',
+  NombreTalle6Desc = 'nombreTalle6_DESC',
   CantidadTalle6Asc = 'cantidadTalle6_ASC',
   CantidadTalle6Desc = 'cantidadTalle6_DESC',
+  NombreTalle7Asc = 'nombreTalle7_ASC',
+  NombreTalle7Desc = 'nombreTalle7_DESC',
   CantidadTalle7Asc = 'cantidadTalle7_ASC',
   CantidadTalle7Desc = 'cantidadTalle7_DESC'
 }
@@ -2066,7 +2137,11 @@ export enum SortUsersBy {
   CartAsc = 'cart_ASC',
   CartDesc = 'cart_DESC',
   OrdenesAsc = 'ordenes_ASC',
-  OrdenesDesc = 'ordenes_DESC'
+  OrdenesDesc = 'ordenes_DESC',
+  PasswordResetIssuedAtAsc = 'passwordResetIssuedAt_ASC',
+  PasswordResetIssuedAtDesc = 'passwordResetIssuedAt_DESC',
+  PasswordResetRedeemedAtAsc = 'passwordResetRedeemedAt_ASC',
+  PasswordResetRedeemedAtDesc = 'passwordResetRedeemedAt_DESC'
 }
 
 /**  A keystone list  */
@@ -2074,26 +2149,40 @@ export type Stock = {
   __typename?: 'Stock';
   id: Scalars['ID'];
   label?: Maybe<Scalars['String']>;
+  producto?: Maybe<Product>;
   color?: Maybe<Scalars['String']>;
-  cantidadTalle0?: Maybe<Scalars['Int']>;
+  nombreTalle1?: Maybe<Scalars['String']>;
   cantidadTalle1?: Maybe<Scalars['Int']>;
+  nombreTalle2?: Maybe<Scalars['String']>;
   cantidadTalle2?: Maybe<Scalars['Int']>;
+  nombreTalle3?: Maybe<Scalars['String']>;
   cantidadTalle3?: Maybe<Scalars['Int']>;
+  nombreTalle4?: Maybe<Scalars['String']>;
   cantidadTalle4?: Maybe<Scalars['Int']>;
+  nombreTalle5?: Maybe<Scalars['String']>;
   cantidadTalle5?: Maybe<Scalars['Int']>;
+  nombreTalle6?: Maybe<Scalars['String']>;
   cantidadTalle6?: Maybe<Scalars['Int']>;
+  nombreTalle7?: Maybe<Scalars['String']>;
   cantidadTalle7?: Maybe<Scalars['Int']>;
 };
 
 export type StockCreateInput = {
+  producto?: Maybe<ProductRelateToOneInput>;
   color?: Maybe<Scalars['String']>;
-  cantidadTalle0?: Maybe<Scalars['Int']>;
+  nombreTalle1?: Maybe<Scalars['String']>;
   cantidadTalle1?: Maybe<Scalars['Int']>;
+  nombreTalle2?: Maybe<Scalars['String']>;
   cantidadTalle2?: Maybe<Scalars['Int']>;
+  nombreTalle3?: Maybe<Scalars['String']>;
   cantidadTalle3?: Maybe<Scalars['Int']>;
+  nombreTalle4?: Maybe<Scalars['String']>;
   cantidadTalle4?: Maybe<Scalars['Int']>;
+  nombreTalle5?: Maybe<Scalars['String']>;
   cantidadTalle5?: Maybe<Scalars['Int']>;
+  nombreTalle6?: Maybe<Scalars['String']>;
   cantidadTalle6?: Maybe<Scalars['Int']>;
+  nombreTalle7?: Maybe<Scalars['String']>;
   cantidadTalle7?: Maybe<Scalars['Int']>;
 };
 
@@ -2105,14 +2194,21 @@ export type StockRelateToManyInput = {
 };
 
 export type StockUpdateInput = {
+  producto?: Maybe<ProductRelateToOneInput>;
   color?: Maybe<Scalars['String']>;
-  cantidadTalle0?: Maybe<Scalars['Int']>;
+  nombreTalle1?: Maybe<Scalars['String']>;
   cantidadTalle1?: Maybe<Scalars['Int']>;
+  nombreTalle2?: Maybe<Scalars['String']>;
   cantidadTalle2?: Maybe<Scalars['Int']>;
+  nombreTalle3?: Maybe<Scalars['String']>;
   cantidadTalle3?: Maybe<Scalars['Int']>;
+  nombreTalle4?: Maybe<Scalars['String']>;
   cantidadTalle4?: Maybe<Scalars['Int']>;
+  nombreTalle5?: Maybe<Scalars['String']>;
   cantidadTalle5?: Maybe<Scalars['Int']>;
+  nombreTalle6?: Maybe<Scalars['String']>;
   cantidadTalle6?: Maybe<Scalars['Int']>;
+  nombreTalle7?: Maybe<Scalars['String']>;
   cantidadTalle7?: Maybe<Scalars['Int']>;
 };
 
@@ -2127,6 +2223,8 @@ export type StockWhereInput = {
   id_gte?: Maybe<Scalars['ID']>;
   id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
   id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  producto?: Maybe<ProductWhereInput>;
+  producto_is_null?: Maybe<Scalars['Boolean']>;
   color?: Maybe<Scalars['String']>;
   color_not?: Maybe<Scalars['String']>;
   color_contains?: Maybe<Scalars['String']>;
@@ -2145,14 +2243,24 @@ export type StockWhereInput = {
   color_not_ends_with_i?: Maybe<Scalars['String']>;
   color_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   color_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  cantidadTalle0?: Maybe<Scalars['Int']>;
-  cantidadTalle0_not?: Maybe<Scalars['Int']>;
-  cantidadTalle0_lt?: Maybe<Scalars['Int']>;
-  cantidadTalle0_lte?: Maybe<Scalars['Int']>;
-  cantidadTalle0_gt?: Maybe<Scalars['Int']>;
-  cantidadTalle0_gte?: Maybe<Scalars['Int']>;
-  cantidadTalle0_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  cantidadTalle0_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  nombreTalle1?: Maybe<Scalars['String']>;
+  nombreTalle1_not?: Maybe<Scalars['String']>;
+  nombreTalle1_contains?: Maybe<Scalars['String']>;
+  nombreTalle1_not_contains?: Maybe<Scalars['String']>;
+  nombreTalle1_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle1_not_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle1_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle1_not_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle1_i?: Maybe<Scalars['String']>;
+  nombreTalle1_not_i?: Maybe<Scalars['String']>;
+  nombreTalle1_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle1_not_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle1_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle1_not_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle1_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle1_not_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle1_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nombreTalle1_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   cantidadTalle1?: Maybe<Scalars['Int']>;
   cantidadTalle1_not?: Maybe<Scalars['Int']>;
   cantidadTalle1_lt?: Maybe<Scalars['Int']>;
@@ -2161,6 +2269,24 @@ export type StockWhereInput = {
   cantidadTalle1_gte?: Maybe<Scalars['Int']>;
   cantidadTalle1_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   cantidadTalle1_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  nombreTalle2?: Maybe<Scalars['String']>;
+  nombreTalle2_not?: Maybe<Scalars['String']>;
+  nombreTalle2_contains?: Maybe<Scalars['String']>;
+  nombreTalle2_not_contains?: Maybe<Scalars['String']>;
+  nombreTalle2_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle2_not_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle2_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle2_not_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle2_i?: Maybe<Scalars['String']>;
+  nombreTalle2_not_i?: Maybe<Scalars['String']>;
+  nombreTalle2_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle2_not_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle2_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle2_not_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle2_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle2_not_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle2_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nombreTalle2_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   cantidadTalle2?: Maybe<Scalars['Int']>;
   cantidadTalle2_not?: Maybe<Scalars['Int']>;
   cantidadTalle2_lt?: Maybe<Scalars['Int']>;
@@ -2169,6 +2295,24 @@ export type StockWhereInput = {
   cantidadTalle2_gte?: Maybe<Scalars['Int']>;
   cantidadTalle2_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   cantidadTalle2_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  nombreTalle3?: Maybe<Scalars['String']>;
+  nombreTalle3_not?: Maybe<Scalars['String']>;
+  nombreTalle3_contains?: Maybe<Scalars['String']>;
+  nombreTalle3_not_contains?: Maybe<Scalars['String']>;
+  nombreTalle3_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle3_not_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle3_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle3_not_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle3_i?: Maybe<Scalars['String']>;
+  nombreTalle3_not_i?: Maybe<Scalars['String']>;
+  nombreTalle3_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle3_not_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle3_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle3_not_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle3_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle3_not_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle3_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nombreTalle3_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   cantidadTalle3?: Maybe<Scalars['Int']>;
   cantidadTalle3_not?: Maybe<Scalars['Int']>;
   cantidadTalle3_lt?: Maybe<Scalars['Int']>;
@@ -2177,6 +2321,24 @@ export type StockWhereInput = {
   cantidadTalle3_gte?: Maybe<Scalars['Int']>;
   cantidadTalle3_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   cantidadTalle3_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  nombreTalle4?: Maybe<Scalars['String']>;
+  nombreTalle4_not?: Maybe<Scalars['String']>;
+  nombreTalle4_contains?: Maybe<Scalars['String']>;
+  nombreTalle4_not_contains?: Maybe<Scalars['String']>;
+  nombreTalle4_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle4_not_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle4_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle4_not_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle4_i?: Maybe<Scalars['String']>;
+  nombreTalle4_not_i?: Maybe<Scalars['String']>;
+  nombreTalle4_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle4_not_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle4_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle4_not_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle4_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle4_not_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle4_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nombreTalle4_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   cantidadTalle4?: Maybe<Scalars['Int']>;
   cantidadTalle4_not?: Maybe<Scalars['Int']>;
   cantidadTalle4_lt?: Maybe<Scalars['Int']>;
@@ -2185,6 +2347,24 @@ export type StockWhereInput = {
   cantidadTalle4_gte?: Maybe<Scalars['Int']>;
   cantidadTalle4_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   cantidadTalle4_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  nombreTalle5?: Maybe<Scalars['String']>;
+  nombreTalle5_not?: Maybe<Scalars['String']>;
+  nombreTalle5_contains?: Maybe<Scalars['String']>;
+  nombreTalle5_not_contains?: Maybe<Scalars['String']>;
+  nombreTalle5_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle5_not_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle5_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle5_not_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle5_i?: Maybe<Scalars['String']>;
+  nombreTalle5_not_i?: Maybe<Scalars['String']>;
+  nombreTalle5_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle5_not_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle5_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle5_not_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle5_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle5_not_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle5_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nombreTalle5_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   cantidadTalle5?: Maybe<Scalars['Int']>;
   cantidadTalle5_not?: Maybe<Scalars['Int']>;
   cantidadTalle5_lt?: Maybe<Scalars['Int']>;
@@ -2193,6 +2373,24 @@ export type StockWhereInput = {
   cantidadTalle5_gte?: Maybe<Scalars['Int']>;
   cantidadTalle5_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   cantidadTalle5_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  nombreTalle6?: Maybe<Scalars['String']>;
+  nombreTalle6_not?: Maybe<Scalars['String']>;
+  nombreTalle6_contains?: Maybe<Scalars['String']>;
+  nombreTalle6_not_contains?: Maybe<Scalars['String']>;
+  nombreTalle6_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle6_not_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle6_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle6_not_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle6_i?: Maybe<Scalars['String']>;
+  nombreTalle6_not_i?: Maybe<Scalars['String']>;
+  nombreTalle6_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle6_not_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle6_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle6_not_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle6_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle6_not_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle6_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nombreTalle6_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   cantidadTalle6?: Maybe<Scalars['Int']>;
   cantidadTalle6_not?: Maybe<Scalars['Int']>;
   cantidadTalle6_lt?: Maybe<Scalars['Int']>;
@@ -2201,6 +2399,24 @@ export type StockWhereInput = {
   cantidadTalle6_gte?: Maybe<Scalars['Int']>;
   cantidadTalle6_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   cantidadTalle6_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  nombreTalle7?: Maybe<Scalars['String']>;
+  nombreTalle7_not?: Maybe<Scalars['String']>;
+  nombreTalle7_contains?: Maybe<Scalars['String']>;
+  nombreTalle7_not_contains?: Maybe<Scalars['String']>;
+  nombreTalle7_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle7_not_starts_with?: Maybe<Scalars['String']>;
+  nombreTalle7_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle7_not_ends_with?: Maybe<Scalars['String']>;
+  nombreTalle7_i?: Maybe<Scalars['String']>;
+  nombreTalle7_not_i?: Maybe<Scalars['String']>;
+  nombreTalle7_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle7_not_contains_i?: Maybe<Scalars['String']>;
+  nombreTalle7_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle7_not_starts_with_i?: Maybe<Scalars['String']>;
+  nombreTalle7_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle7_not_ends_with_i?: Maybe<Scalars['String']>;
+  nombreTalle7_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nombreTalle7_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   cantidadTalle7?: Maybe<Scalars['Int']>;
   cantidadTalle7_not?: Maybe<Scalars['Int']>;
   cantidadTalle7_lt?: Maybe<Scalars['Int']>;
@@ -2346,6 +2562,9 @@ export type User = {
   _cartMeta?: Maybe<_QueryMeta>;
   ordenes: Array<Order>;
   _ordenesMeta?: Maybe<_QueryMeta>;
+  passwordResetToken_is_set?: Maybe<Scalars['Boolean']>;
+  passwordResetIssuedAt?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt?: Maybe<Scalars['String']>;
 };
 
 
@@ -2415,6 +2634,9 @@ export type UserCreateInput = {
   rol?: Maybe<RoleRelateToOneInput>;
   cart?: Maybe<CartItemRelateToManyInput>;
   ordenes?: Maybe<OrderRelateToManyInput>;
+  passwordResetToken?: Maybe<Scalars['String']>;
+  passwordResetIssuedAt?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt?: Maybe<Scalars['String']>;
 };
 
 export type UserRelateToManyInput = {
@@ -2440,6 +2662,9 @@ export type UserUpdateInput = {
   rol?: Maybe<RoleRelateToOneInput>;
   cart?: Maybe<CartItemRelateToManyInput>;
   ordenes?: Maybe<OrderRelateToManyInput>;
+  passwordResetToken?: Maybe<Scalars['String']>;
+  passwordResetIssuedAt?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt?: Maybe<Scalars['String']>;
 };
 
 export type UserWhereInput = {
@@ -2540,6 +2765,23 @@ export type UserWhereInput = {
   ordenes_some?: Maybe<OrderWhereInput>;
   /**  condition must be false for all nodes  */
   ordenes_none?: Maybe<OrderWhereInput>;
+  passwordResetToken_is_set?: Maybe<Scalars['Boolean']>;
+  passwordResetIssuedAt?: Maybe<Scalars['String']>;
+  passwordResetIssuedAt_not?: Maybe<Scalars['String']>;
+  passwordResetIssuedAt_lt?: Maybe<Scalars['String']>;
+  passwordResetIssuedAt_lte?: Maybe<Scalars['String']>;
+  passwordResetIssuedAt_gt?: Maybe<Scalars['String']>;
+  passwordResetIssuedAt_gte?: Maybe<Scalars['String']>;
+  passwordResetIssuedAt_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  passwordResetIssuedAt_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  passwordResetRedeemedAt?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt_not?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt_lt?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt_lte?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt_gt?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt_gte?: Maybe<Scalars['String']>;
+  passwordResetRedeemedAt_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  passwordResetRedeemedAt_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UserWhereUniqueInput = {
@@ -2553,6 +2795,12 @@ export type UsersCreateInput = {
 export type UsersUpdateInput = {
   id: Scalars['ID'];
   data?: Maybe<UserUpdateInput>;
+};
+
+export type ValidateUserPasswordResetTokenResult = {
+  __typename?: 'ValidateUserPasswordResetTokenResult';
+  code: PasswordResetRedemptionErrorCode;
+  message: Scalars['String'];
 };
 
 export type _QueryMeta = {
@@ -2619,6 +2867,32 @@ export type PaginationQuery = (
   )> }
 );
 
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = (
+  { __typename?: 'Query' }
+  & { authenticatedItem?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'nombre' | 'apellido' | 'telefono'>
+    & { cart: Array<(
+      { __typename?: 'CartItem' }
+      & Pick<CartItem, 'id' | 'cantidad'>
+      & { producto?: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'id' | 'articulo' | 'precio' | 'nombre' | 'descripcion'>
+        & { imagen: Array<(
+          { __typename?: 'ProductImage' }
+          & { image?: Maybe<(
+            { __typename?: 'CloudinaryImage_File' }
+            & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+          )> }
+        )> }
+      )> }
+    )> }
+  )> }
+);
+
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -2637,7 +2911,7 @@ export type ProductByIdQuery = (
       & Pick<TipoDePrenda, 'id' | 'tipo'>
     )>, stock: Array<(
       { __typename?: 'Stock' }
-      & Pick<Stock, 'id' | 'color' | 'cantidadTalle0' | 'cantidadTalle1' | 'cantidadTalle2' | 'cantidadTalle3' | 'cantidadTalle4' | 'cantidadTalle5' | 'cantidadTalle6' | 'cantidadTalle7'>
+      & Pick<Stock, 'id' | 'color' | 'nombreTalle1' | 'cantidadTalle1' | 'nombreTalle2' | 'cantidadTalle2' | 'nombreTalle3' | 'cantidadTalle3' | 'nombreTalle4' | 'cantidadTalle4' | 'nombreTalle5' | 'cantidadTalle5' | 'nombreTalle6' | 'cantidadTalle6' | 'nombreTalle7' | 'cantidadTalle7'>
     )>, imagen: Array<(
       { __typename?: 'ProductImage' }
       & Pick<ProductImage, 'id'>
@@ -2682,6 +2956,34 @@ export type ProductsPerPageQuery = (
   )>>> }
 );
 
+export type RedeemPasswordResetMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type RedeemPasswordResetMutation = (
+  { __typename?: 'Mutation' }
+  & { redeemUserPasswordResetToken?: Maybe<(
+    { __typename?: 'RedeemUserPasswordResetTokenResult' }
+    & Pick<RedeemUserPasswordResetTokenResult, 'code' | 'message'>
+  )> }
+);
+
+export type RequestResetMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type RequestResetMutation = (
+  { __typename?: 'Mutation' }
+  & { sendUserPasswordResetLink?: Maybe<(
+    { __typename?: 'SendUserPasswordResetLinkResult' }
+    & Pick<SendUserPasswordResetLinkResult, 'code' | 'message'>
+  )> }
+);
+
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String'];
 }>;
@@ -2701,6 +3003,51 @@ export type SearchProductsQuery = (
       )> }
     )> }
   )>>> }
+);
+
+export type SignInMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type SignInMutation = (
+  { __typename?: 'Mutation' }
+  & { authenticateUserWithPassword: (
+    { __typename?: 'UserAuthenticationWithPasswordSuccess' }
+    & { item: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email' | 'nombre' | 'apellido' | 'telefono'>
+    ) }
+  ) | (
+    { __typename?: 'UserAuthenticationWithPasswordFailure' }
+    & Pick<UserAuthenticationWithPasswordFailure, 'code' | 'message'>
+  ) }
+);
+
+export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SignOutMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'endSession'>
+);
+
+export type SignUpMutationVariables = Exact<{
+  nombre: Scalars['String'];
+  apellido: Scalars['String'];
+  telefono?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type SignUpMutation = (
+  { __typename?: 'Mutation' }
+  & { createUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'nombre' | 'apellido' | 'telefono'>
+  )> }
 );
 
 export type ProductByBrandQueryVariables = Exact<{
@@ -2879,6 +3226,65 @@ export type PaginationQueryResult = Apollo.QueryResult<PaginationQuery, Paginati
 export function refetchPaginationQuery(variables?: PaginationQueryVariables) {
       return { query: PaginationDocument, variables: variables }
     }
+export const CurrentUserDocument = gql`
+    query CurrentUser {
+  authenticatedItem {
+    ... on User {
+      id
+      email
+      nombre
+      apellido
+      telefono
+      cart {
+        id
+        cantidad
+        producto {
+          id
+          articulo
+          precio
+          nombre
+          descripcion
+          imagen {
+            image {
+              publicUrlTransformed
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCurrentUserQuery__
+ *
+ * To run a query within a React component, call `useCurrentUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentUserQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+      }
+export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+        }
+export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
+export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
+export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export function refetchCurrentUserQuery(variables?: CurrentUserQueryVariables) {
+      return { query: CurrentUserDocument, variables: variables }
+    }
 export const ProductByIdDocument = gql`
     query productById($id: ID!) {
   Product(where: {id: $id}) {
@@ -2898,13 +3304,19 @@ export const ProductByIdDocument = gql`
     stock {
       id
       color
-      cantidadTalle0
+      nombreTalle1
       cantidadTalle1
+      nombreTalle2
       cantidadTalle2
+      nombreTalle3
       cantidadTalle3
+      nombreTalle4
       cantidadTalle4
+      nombreTalle5
       cantidadTalle5
+      nombreTalle6
       cantidadTalle6
+      nombreTalle7
       cantidadTalle7
     }
     imagen {
@@ -3015,6 +3427,76 @@ export type ProductsPerPageQueryResult = Apollo.QueryResult<ProductsPerPageQuery
 export function refetchProductsPerPageQuery(variables?: ProductsPerPageQueryVariables) {
       return { query: ProductsPerPageDocument, variables: variables }
     }
+export const RedeemPasswordResetDocument = gql`
+    mutation redeemPasswordReset($email: String!, $password: String!, $token: String!) {
+  redeemUserPasswordResetToken(email: $email, password: $password, token: $token) {
+    code
+    message
+  }
+}
+    `;
+export type RedeemPasswordResetMutationFn = Apollo.MutationFunction<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>;
+
+/**
+ * __useRedeemPasswordResetMutation__
+ *
+ * To run a mutation, you first call `useRedeemPasswordResetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRedeemPasswordResetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [redeemPasswordResetMutation, { data, loading, error }] = useRedeemPasswordResetMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useRedeemPasswordResetMutation(baseOptions?: Apollo.MutationHookOptions<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>(RedeemPasswordResetDocument, options);
+      }
+export type RedeemPasswordResetMutationHookResult = ReturnType<typeof useRedeemPasswordResetMutation>;
+export type RedeemPasswordResetMutationResult = Apollo.MutationResult<RedeemPasswordResetMutation>;
+export type RedeemPasswordResetMutationOptions = Apollo.BaseMutationOptions<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>;
+export const RequestResetDocument = gql`
+    mutation requestReset($email: String!) {
+  sendUserPasswordResetLink(email: $email) {
+    code
+    message
+  }
+}
+    `;
+export type RequestResetMutationFn = Apollo.MutationFunction<RequestResetMutation, RequestResetMutationVariables>;
+
+/**
+ * __useRequestResetMutation__
+ *
+ * To run a mutation, you first call `useRequestResetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRequestResetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [requestResetMutation, { data, loading, error }] = useRequestResetMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useRequestResetMutation(baseOptions?: Apollo.MutationHookOptions<RequestResetMutation, RequestResetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RequestResetMutation, RequestResetMutationVariables>(RequestResetDocument, options);
+      }
+export type RequestResetMutationHookResult = ReturnType<typeof useRequestResetMutation>;
+export type RequestResetMutationResult = Apollo.MutationResult<RequestResetMutation>;
+export type RequestResetMutationOptions = Apollo.BaseMutationOptions<RequestResetMutation, RequestResetMutationVariables>;
 export const SearchProductsDocument = gql`
     query searchProducts($searchTerm: String!) {
   searchTerms: allProducts(
@@ -3063,6 +3545,125 @@ export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, 
 export function refetchSearchProductsQuery(variables?: SearchProductsQueryVariables) {
       return { query: SearchProductsDocument, variables: variables }
     }
+export const SignInDocument = gql`
+    mutation signIn($email: String!, $password: String!) {
+  authenticateUserWithPassword(email: $email, password: $password) {
+    ... on UserAuthenticationWithPasswordSuccess {
+      item {
+        id
+        email
+        nombre
+        apellido
+        telefono
+      }
+    }
+    ... on UserAuthenticationWithPasswordFailure {
+      code
+      message
+    }
+  }
+}
+    `;
+export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMutationVariables>;
+
+/**
+ * __useSignInMutation__
+ *
+ * To run a mutation, you first call `useSignInMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignInMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signInMutation, { data, loading, error }] = useSignInMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignInMutation, SignInMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, options);
+      }
+export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
+export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
+export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
+export const SignOutDocument = gql`
+    mutation SignOut {
+  endSession
+}
+    `;
+export type SignOutMutationFn = Apollo.MutationFunction<SignOutMutation, SignOutMutationVariables>;
+
+/**
+ * __useSignOutMutation__
+ *
+ * To run a mutation, you first call `useSignOutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignOutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signOutMutation, { data, loading, error }] = useSignOutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSignOutMutation(baseOptions?: Apollo.MutationHookOptions<SignOutMutation, SignOutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument, options);
+      }
+export type SignOutMutationHookResult = ReturnType<typeof useSignOutMutation>;
+export type SignOutMutationResult = Apollo.MutationResult<SignOutMutation>;
+export type SignOutMutationOptions = Apollo.BaseMutationOptions<SignOutMutation, SignOutMutationVariables>;
+export const SignUpDocument = gql`
+    mutation signUp($nombre: String!, $apellido: String!, $telefono: String, $email: String!, $password: String!) {
+  createUser(
+    data: {nombre: $nombre, apellido: $apellido, telefono: $telefono, email: $email, password: $password}
+  ) {
+    id
+    email
+    nombre
+    apellido
+    telefono
+  }
+}
+    `;
+export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
+
+/**
+ * __useSignUpMutation__
+ *
+ * To run a mutation, you first call `useSignUpMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignUpMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signUpMutation, { data, loading, error }] = useSignUpMutation({
+ *   variables: {
+ *      nombre: // value for 'nombre'
+ *      apellido: // value for 'apellido'
+ *      telefono: // value for 'telefono'
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignUpMutation, SignUpMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
+      }
+export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
+export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
+export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
 export const ProductByBrandDocument = gql`
     query productByBrand($marca: String!) {
   allProducts(where: {marca: {marca_i: $marca}}) {
@@ -3212,7 +3813,7 @@ export type KeystoneMetaKeySpecifier = ('adminMeta' | KeystoneMetaKeySpecifier)[
 export type KeystoneMetaFieldPolicy = {
 	adminMeta?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createStock' | 'createStocks' | 'updateStock' | 'updateStocks' | 'deleteStock' | 'deleteStocks' | 'createRole' | 'createRoles' | 'updateRole' | 'updateRoles' | 'deleteRole' | 'deleteRoles' | 'createOrderItem' | 'createOrderItems' | 'updateOrderItem' | 'updateOrderItems' | 'deleteOrderItem' | 'deleteOrderItems' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'createOrder' | 'createOrders' | 'updateOrder' | 'updateOrders' | 'deleteOrder' | 'deleteOrders' | 'createBrand' | 'createBrands' | 'updateBrand' | 'updateBrands' | 'deleteBrand' | 'deleteBrands' | 'createTipoDePrenda' | 'createTipoDePrendas' | 'updateTipoDePrenda' | 'updateTipoDePrendas' | 'deleteTipoDePrenda' | 'deleteTipoDePrendas' | 'authenticateUserWithPassword' | 'createInitialUser' | 'endSession' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createStock' | 'createStocks' | 'updateStock' | 'updateStocks' | 'deleteStock' | 'deleteStocks' | 'createRole' | 'createRoles' | 'updateRole' | 'updateRoles' | 'deleteRole' | 'deleteRoles' | 'createOrderItem' | 'createOrderItems' | 'updateOrderItem' | 'updateOrderItems' | 'deleteOrderItem' | 'deleteOrderItems' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'createOrder' | 'createOrders' | 'updateOrder' | 'updateOrders' | 'deleteOrder' | 'deleteOrders' | 'createBrand' | 'createBrands' | 'updateBrand' | 'updateBrands' | 'deleteBrand' | 'deleteBrands' | 'createTipoDePrenda' | 'createTipoDePrendas' | 'updateTipoDePrenda' | 'updateTipoDePrendas' | 'deleteTipoDePrenda' | 'deleteTipoDePrendas' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'endSession' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	createUsers?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3276,6 +3877,8 @@ export type MutationFieldPolicy = {
 	deleteTipoDePrendas?: FieldPolicy<any> | FieldReadFunction<any>,
 	authenticateUserWithPassword?: FieldPolicy<any> | FieldReadFunction<any>,
 	createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>,
+	sendUserPasswordResetLink?: FieldPolicy<any> | FieldReadFunction<any>,
+	redeemUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	endSession?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type OrderKeySpecifier = ('id' | 'label' | 'total' | 'items' | '_itemsMeta' | 'usuario' | 'charge' | OrderKeySpecifier)[];
@@ -3306,7 +3909,7 @@ export type OrderItemFieldPolicy = {
 	marca?: FieldPolicy<any> | FieldReadFunction<any>,
 	orden?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductKeySpecifier = ('id' | 'label' | 'articulo' | 'nombre' | 'slug' | 'descripcion' | 'imagen' | '_imagenMeta' | 'status' | 'precio' | 'tipoDePrenda' | 'stock' | '_stockMeta' | 'marca' | ProductKeySpecifier)[];
+export type ProductKeySpecifier = ('id' | 'label' | 'articulo' | 'nombre' | 'slug' | 'descripcion' | 'imagen' | '_imagenMeta' | 'status' | 'precio' | 'tipoDePrenda' | 'categoria' | 'stock' | '_stockMeta' | 'marca' | ProductKeySpecifier)[];
 export type ProductFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	label?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3319,6 +3922,7 @@ export type ProductFieldPolicy = {
 	status?: FieldPolicy<any> | FieldReadFunction<any>,
 	precio?: FieldPolicy<any> | FieldReadFunction<any>,
 	tipoDePrenda?: FieldPolicy<any> | FieldReadFunction<any>,
+	categoria?: FieldPolicy<any> | FieldReadFunction<any>,
 	stock?: FieldPolicy<any> | FieldReadFunction<any>,
 	_stockMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	marca?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3329,7 +3933,7 @@ export type ProductImageFieldPolicy = {
 	image?: FieldPolicy<any> | FieldReadFunction<any>,
 	altText?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | 'allStocks' | 'Stock' | '_allStocksMeta' | 'allRoles' | 'Role' | '_allRolesMeta' | 'allOrderItems' | 'OrderItem' | '_allOrderItemsMeta' | 'allCartItems' | 'CartItem' | '_allCartItemsMeta' | 'allOrders' | 'Order' | '_allOrdersMeta' | 'allBrands' | 'Brand' | '_allBrandsMeta' | 'allTipoDePrendas' | 'TipoDePrenda' | '_allTipoDePrendasMeta' | 'authenticatedItem' | 'keystone' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | 'allStocks' | 'Stock' | '_allStocksMeta' | 'allRoles' | 'Role' | '_allRolesMeta' | 'allOrderItems' | 'OrderItem' | '_allOrderItemsMeta' | 'allCartItems' | 'CartItem' | '_allCartItemsMeta' | 'allOrders' | 'Order' | '_allOrdersMeta' | 'allBrands' | 'Brand' | '_allBrandsMeta' | 'allTipoDePrendas' | 'TipoDePrenda' | '_allTipoDePrendasMeta' | 'authenticatedItem' | 'validateUserPasswordResetToken' | 'keystone' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	allUsers?: FieldPolicy<any> | FieldReadFunction<any>,
 	User?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3362,7 +3966,13 @@ export type QueryFieldPolicy = {
 	TipoDePrenda?: FieldPolicy<any> | FieldReadFunction<any>,
 	_allTipoDePrendasMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	authenticatedItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	validateUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	keystone?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type RedeemUserPasswordResetTokenResultKeySpecifier = ('code' | 'message' | RedeemUserPasswordResetTokenResultKeySpecifier)[];
+export type RedeemUserPasswordResetTokenResultFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type RoleKeySpecifier = ('id' | 'nombre' | 'canManageProducts' | 'canSeeOtherUsers' | 'canManageUsers' | 'canManageRoles' | 'canManageCart' | 'canManageOrders' | 'asignado' | '_asignadoMeta' | RoleKeySpecifier)[];
 export type RoleFieldPolicy = {
@@ -3377,18 +3987,30 @@ export type RoleFieldPolicy = {
 	asignado?: FieldPolicy<any> | FieldReadFunction<any>,
 	_asignadoMeta?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type StockKeySpecifier = ('id' | 'label' | 'color' | 'cantidadTalle0' | 'cantidadTalle1' | 'cantidadTalle2' | 'cantidadTalle3' | 'cantidadTalle4' | 'cantidadTalle5' | 'cantidadTalle6' | 'cantidadTalle7' | StockKeySpecifier)[];
+export type SendUserPasswordResetLinkResultKeySpecifier = ('code' | 'message' | SendUserPasswordResetLinkResultKeySpecifier)[];
+export type SendUserPasswordResetLinkResultFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type StockKeySpecifier = ('id' | 'label' | 'producto' | 'color' | 'nombreTalle1' | 'cantidadTalle1' | 'nombreTalle2' | 'cantidadTalle2' | 'nombreTalle3' | 'cantidadTalle3' | 'nombreTalle4' | 'cantidadTalle4' | 'nombreTalle5' | 'cantidadTalle5' | 'nombreTalle6' | 'cantidadTalle6' | 'nombreTalle7' | 'cantidadTalle7' | StockKeySpecifier)[];
 export type StockFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	label?: FieldPolicy<any> | FieldReadFunction<any>,
+	producto?: FieldPolicy<any> | FieldReadFunction<any>,
 	color?: FieldPolicy<any> | FieldReadFunction<any>,
-	cantidadTalle0?: FieldPolicy<any> | FieldReadFunction<any>,
+	nombreTalle1?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidadTalle1?: FieldPolicy<any> | FieldReadFunction<any>,
+	nombreTalle2?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidadTalle2?: FieldPolicy<any> | FieldReadFunction<any>,
+	nombreTalle3?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidadTalle3?: FieldPolicy<any> | FieldReadFunction<any>,
+	nombreTalle4?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidadTalle4?: FieldPolicy<any> | FieldReadFunction<any>,
+	nombreTalle5?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidadTalle5?: FieldPolicy<any> | FieldReadFunction<any>,
+	nombreTalle6?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidadTalle6?: FieldPolicy<any> | FieldReadFunction<any>,
+	nombreTalle7?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidadTalle7?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TipoDePrendaKeySpecifier = ('id' | 'label' | 'tipo' | 'slug' | 'producto' | '_productoMeta' | TipoDePrendaKeySpecifier)[];
@@ -3400,7 +4022,7 @@ export type TipoDePrendaFieldPolicy = {
 	producto?: FieldPolicy<any> | FieldReadFunction<any>,
 	_productoMeta?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type UserKeySpecifier = ('id' | 'nombre' | 'apellido' | 'telefono' | 'email' | 'password_is_set' | 'rol' | 'cart' | '_cartMeta' | 'ordenes' | '_ordenesMeta' | UserKeySpecifier)[];
+export type UserKeySpecifier = ('id' | 'nombre' | 'apellido' | 'telefono' | 'email' | 'password_is_set' | 'rol' | 'cart' | '_cartMeta' | 'ordenes' | '_ordenesMeta' | 'passwordResetToken_is_set' | 'passwordResetIssuedAt' | 'passwordResetRedeemedAt' | UserKeySpecifier)[];
 export type UserFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	nombre?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3412,7 +4034,10 @@ export type UserFieldPolicy = {
 	cart?: FieldPolicy<any> | FieldReadFunction<any>,
 	_cartMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	ordenes?: FieldPolicy<any> | FieldReadFunction<any>,
-	_ordenesMeta?: FieldPolicy<any> | FieldReadFunction<any>
+	_ordenesMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	passwordResetToken_is_set?: FieldPolicy<any> | FieldReadFunction<any>,
+	passwordResetIssuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	passwordResetRedeemedAt?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type UserAuthenticationWithPasswordFailureKeySpecifier = ('code' | 'message' | UserAuthenticationWithPasswordFailureKeySpecifier)[];
 export type UserAuthenticationWithPasswordFailureFieldPolicy = {
@@ -3423,6 +4048,11 @@ export type UserAuthenticationWithPasswordSuccessKeySpecifier = ('sessionToken' 
 export type UserAuthenticationWithPasswordSuccessFieldPolicy = {
 	sessionToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	item?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ValidateUserPasswordResetTokenResultKeySpecifier = ('code' | 'message' | ValidateUserPasswordResetTokenResultKeySpecifier)[];
+export type ValidateUserPasswordResetTokenResultFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type _QueryMetaKeySpecifier = ('count' | _QueryMetaKeySpecifier)[];
 export type _QueryMetaFieldPolicy = {
@@ -3497,9 +4127,17 @@ export type TypedTypePolicies = TypePolicies & {
 		keyFields?: false | QueryKeySpecifier | (() => undefined | QueryKeySpecifier),
 		fields?: QueryFieldPolicy,
 	},
+	RedeemUserPasswordResetTokenResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | RedeemUserPasswordResetTokenResultKeySpecifier | (() => undefined | RedeemUserPasswordResetTokenResultKeySpecifier),
+		fields?: RedeemUserPasswordResetTokenResultFieldPolicy,
+	},
 	Role?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | RoleKeySpecifier | (() => undefined | RoleKeySpecifier),
 		fields?: RoleFieldPolicy,
+	},
+	SendUserPasswordResetLinkResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | SendUserPasswordResetLinkResultKeySpecifier | (() => undefined | SendUserPasswordResetLinkResultKeySpecifier),
+		fields?: SendUserPasswordResetLinkResultFieldPolicy,
 	},
 	Stock?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | StockKeySpecifier | (() => undefined | StockKeySpecifier),
@@ -3520,6 +4158,10 @@ export type TypedTypePolicies = TypePolicies & {
 	UserAuthenticationWithPasswordSuccess?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | UserAuthenticationWithPasswordSuccessKeySpecifier | (() => undefined | UserAuthenticationWithPasswordSuccessKeySpecifier),
 		fields?: UserAuthenticationWithPasswordSuccessFieldPolicy,
+	},
+	ValidateUserPasswordResetTokenResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ValidateUserPasswordResetTokenResultKeySpecifier | (() => undefined | ValidateUserPasswordResetTokenResultKeySpecifier),
+		fields?: ValidateUserPasswordResetTokenResultFieldPolicy,
 	},
 	_QueryMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | _QueryMetaKeySpecifier | (() => undefined | _QueryMetaKeySpecifier),

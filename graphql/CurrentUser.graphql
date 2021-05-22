@@ -1,0 +1,27 @@
+query CurrentUser {
+  authenticatedItem {
+    ... on User {
+      id
+      email
+      nombre
+      apellido
+      telefono
+      cart {
+        id
+        cantidad
+        producto {
+          id
+          articulo
+          precio
+          nombre
+          descripcion
+          imagen {
+            image {
+              publicUrlTransformed
+            }
+          }
+        }
+      }
+    }
+  }
+}
