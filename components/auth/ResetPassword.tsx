@@ -1,6 +1,7 @@
 import React, { SyntheticEvent } from 'react';
-import {useForm} from '../../lib/useForm';
+import { useForm } from '../../lib/useForm';
 import { useRequestResetMutation } from '../../types/generated-queries';
+import DisplayError from '../ErrorMessage';
 import Form from './styles/Form';
 
 export const ResetPassword = () => {
@@ -24,6 +25,7 @@ export const ResetPassword = () => {
   return (
     <Form method='POST' onSubmit={handleSubmit}>
       <h2>Recuperar Contraseña</h2>
+      <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor='email'>
           Email

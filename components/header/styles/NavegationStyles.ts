@@ -70,7 +70,7 @@ export const NavigationStyles = styled.nav`
     a,
     button {
       /* padding: 1rem 3rem; */
-      font-size: 1rem;
+      font-size: 1.6rem;
       &:not(:first-child):before {
         width: 0px;
         /* transform: translateX(50%); */

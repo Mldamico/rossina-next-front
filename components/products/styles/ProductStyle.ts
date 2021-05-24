@@ -51,4 +51,15 @@ export const ProductStyle = styled.div`
     border-width: 0px;
     cursor: pointer;
   }
+  @media (max-width: 500px) {
+    .overlay {
+      width: 30rem;
+    }
+    img {
+      width: 30rem;
+    }
+    .container {
+      width: 30rem;
+    }
+  }
 `;

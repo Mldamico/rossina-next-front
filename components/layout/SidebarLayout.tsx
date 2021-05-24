@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const SidebarStyles = styled.aside`
   .sidebar-path {
@@ -11,7 +11,11 @@ const SidebarStyles = styled.aside`
     flex-direction: column;
     margin-left: 1rem;
   }
+
+  @media (max-width: 500px) {
+    margin: 0 auto;
+  }
 `;
-export const SidebarLayout = ({children}) => {
+export const SidebarLayout = ({ children }) => {
   return <SidebarStyles>{children}</SidebarStyles>;
 };

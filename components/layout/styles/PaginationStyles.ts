@@ -21,6 +21,9 @@ const PaginationStyles = styled.div`
     color: grey;
     pointer-events: none;
   }
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(2, auto);
+  }
 `;
 
 export default PaginationStyles;

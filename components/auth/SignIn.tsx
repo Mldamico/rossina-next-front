@@ -1,9 +1,11 @@
 import React, { SyntheticEvent } from 'react';
-import {useForm} from '../../lib/useForm';
+import { useForm } from '../../lib/useForm';
 import {
+  refetchCurrentUserQuery,
   useSignInMutation,
   useSignUpMutation,
 } from '../../types/generated-queries';
+import DisplayError from '../ErrorMessage';
 import Form from './styles/Form';
 
 export const SignIn = () => {
@@ -12,22 +14,31 @@ export const SignIn = () => {
     password: '',
   });
 
-  const [signIn, { data, loading, error }] = useSignInMutation({
+  const [signIn, { data, loading }] = useSignInMutation({
     variables: {
       email: inputs.email,
       password: inputs.password,
     },
+    refetchQueries: [refetchCurrentUserQuery()],
   });
 
   async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
+    console.log(inputs);
     await signIn();
     resetForm();
   }
 
+  const error =
+    data?.authenticateUserWithPassword.__typename ===
+    'UserAuthenticationWithPasswordFailure'
+      ? data?.authenticateUserWithPassword
+      : undefined;
+
   return (
     <Form method='POST' onSubmit={handleSubmit}>
       <h2>Entrar</h2>
+      <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor='email'>
           Email

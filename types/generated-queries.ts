@@ -504,6 +504,7 @@ export type Mutation = {
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   sendUserPasswordResetLink?: Maybe<SendUserPasswordResetLinkResult>;
   redeemUserPasswordResetToken?: Maybe<RedeemUserPasswordResetTokenResult>;
+  addToCart?: Maybe<CartItem>;
   endSession: Scalars['Boolean'];
 };
 
@@ -838,6 +839,11 @@ export type MutationRedeemUserPasswordResetTokenArgs = {
   email: Scalars['String'];
   token: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationAddToCartArgs = {
+  productId?: Maybe<Scalars['ID']>;
 };
 
 /**  A keystone list  */
@@ -2808,6 +2814,19 @@ export type _QueryMeta = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type AddToCartMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AddToCartMutation = (
+  { __typename?: 'Mutation' }
+  & { addToCart?: Maybe<(
+    { __typename?: 'CartItem' }
+    & Pick<CartItem, 'id'>
+  )> }
+);
+
 export type AllBrandsQueryVariables = Exact<{
   tipoDePrenda?: Maybe<Scalars['String']>;
 }>;
@@ -2883,10 +2902,20 @@ export type CurrentUserQuery = (
         & Pick<Product, 'id' | 'articulo' | 'precio' | 'nombre' | 'descripcion'>
         & { imagen: Array<(
           { __typename?: 'ProductImage' }
+          & Pick<ProductImage, 'id'>
           & { image?: Maybe<(
             { __typename?: 'CloudinaryImage_File' }
             & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
           )> }
+        )>, stock: Array<(
+          { __typename?: 'Stock' }
+          & Pick<Stock, 'id' | 'color'>
+        )>, tipoDePrenda?: Maybe<(
+          { __typename?: 'TipoDePrenda' }
+          & Pick<TipoDePrenda, 'id' | 'tipo'>
+        )>, marca?: Maybe<(
+          { __typename?: 'Brand' }
+          & Pick<Brand, 'id' | 'marca'>
         )> }
       )> }
     )> }
@@ -3081,6 +3110,39 @@ export type ProductByBrandQuery = (
 );
 
 
+export const AddToCartDocument = gql`
+    mutation AddToCart($id: ID!) {
+  addToCart(productId: $id) {
+    id
+  }
+}
+    `;
+export type AddToCartMutationFn = Apollo.MutationFunction<AddToCartMutation, AddToCartMutationVariables>;
+
+/**
+ * __useAddToCartMutation__
+ *
+ * To run a mutation, you first call `useAddToCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddToCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addToCartMutation, { data, loading, error }] = useAddToCartMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAddToCartMutation(baseOptions?: Apollo.MutationHookOptions<AddToCartMutation, AddToCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddToCartMutation, AddToCartMutationVariables>(AddToCartDocument, options);
+      }
+export type AddToCartMutationHookResult = ReturnType<typeof useAddToCartMutation>;
+export type AddToCartMutationResult = Apollo.MutationResult<AddToCartMutation>;
+export type AddToCartMutationOptions = Apollo.BaseMutationOptions<AddToCartMutation, AddToCartMutationVariables>;
 export const AllBrandsDocument = gql`
     query allBrands($tipoDePrenda: String) {
   allBrands(where: {tipoDePrenda_some: {tipo_i: $tipoDePrenda}}) {
@@ -3245,9 +3307,22 @@ export const CurrentUserDocument = gql`
           nombre
           descripcion
           imagen {
+            id
             image {
               publicUrlTransformed
             }
+          }
+          stock {
+            id
+            color
+          }
+          tipoDePrenda {
+            id
+            tipo
+          }
+          marca {
+            id
+            marca
           }
         }
       }
@@ -3813,7 +3888,7 @@ export type KeystoneMetaKeySpecifier = ('adminMeta' | KeystoneMetaKeySpecifier)[
 export type KeystoneMetaFieldPolicy = {
 	adminMeta?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createStock' | 'createStocks' | 'updateStock' | 'updateStocks' | 'deleteStock' | 'deleteStocks' | 'createRole' | 'createRoles' | 'updateRole' | 'updateRoles' | 'deleteRole' | 'deleteRoles' | 'createOrderItem' | 'createOrderItems' | 'updateOrderItem' | 'updateOrderItems' | 'deleteOrderItem' | 'deleteOrderItems' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'createOrder' | 'createOrders' | 'updateOrder' | 'updateOrders' | 'deleteOrder' | 'deleteOrders' | 'createBrand' | 'createBrands' | 'updateBrand' | 'updateBrands' | 'deleteBrand' | 'deleteBrands' | 'createTipoDePrenda' | 'createTipoDePrendas' | 'updateTipoDePrenda' | 'updateTipoDePrendas' | 'deleteTipoDePrenda' | 'deleteTipoDePrendas' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'endSession' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createStock' | 'createStocks' | 'updateStock' | 'updateStocks' | 'deleteStock' | 'deleteStocks' | 'createRole' | 'createRoles' | 'updateRole' | 'updateRoles' | 'deleteRole' | 'deleteRoles' | 'createOrderItem' | 'createOrderItems' | 'updateOrderItem' | 'updateOrderItems' | 'deleteOrderItem' | 'deleteOrderItems' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'createOrder' | 'createOrders' | 'updateOrder' | 'updateOrders' | 'deleteOrder' | 'deleteOrders' | 'createBrand' | 'createBrands' | 'updateBrand' | 'updateBrands' | 'deleteBrand' | 'deleteBrands' | 'createTipoDePrenda' | 'createTipoDePrendas' | 'updateTipoDePrenda' | 'updateTipoDePrendas' | 'deleteTipoDePrenda' | 'deleteTipoDePrendas' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'addToCart' | 'endSession' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	createUsers?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3879,6 +3954,7 @@ export type MutationFieldPolicy = {
 	createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	sendUserPasswordResetLink?: FieldPolicy<any> | FieldReadFunction<any>,
 	redeemUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
+	addToCart?: FieldPolicy<any> | FieldReadFunction<any>,
 	endSession?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type OrderKeySpecifier = ('id' | 'label' | 'total' | 'items' | '_itemsMeta' | 'usuario' | 'charge' | OrderKeySpecifier)[];

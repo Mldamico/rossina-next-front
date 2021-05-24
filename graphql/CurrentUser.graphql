@@ -16,9 +16,22 @@ query CurrentUser {
           nombre
           descripcion
           imagen {
+            id
             image {
               publicUrlTransformed
             }
+          }
+          stock {
+            id
+            color
+          }
+          tipoDePrenda {
+            id
+            tipo
+          }
+          marca {
+            id
+            marca
           }
         }
       }

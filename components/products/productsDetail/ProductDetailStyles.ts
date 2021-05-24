@@ -103,7 +103,7 @@ export const ProductDetailStyles = styled.section`
     }
 
     .image-container {
-      grid-template-columns: 1fr;
+      width: 30rem;
     }
   }
 `;

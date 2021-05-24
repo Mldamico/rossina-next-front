@@ -18,6 +18,13 @@ const ProductsStyles = styled.main`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   grid-gap: 5rem;
+  @media (max-width: 500px) {
+    grid-template-columns: 300px;
+    justify-content: center;
+    img {
+      width: 30rem;
+    }
+  }
 `;
 
 export const Products = ({ page }) => {

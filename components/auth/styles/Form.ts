@@ -18,6 +18,7 @@ const Form = styled.form`
   font-size: 1.5rem;
   line-height: 1.5;
   font-weight: 600;
+
   label {
     display: block;
     margin-bottom: 1rem;
@@ -37,15 +38,20 @@ const Form = styled.form`
   button,
   input[type='submit'] {
     width: auto;
-    background: red;
+    margin-right: auto;
+    align-self: flex-end;
+    background: var(--red);
     color: white;
     border: 0;
     font-size: 2rem;
     font-weight: 600;
     padding: 0.5rem 1.2rem;
+    position: absolute;
+    right: 0;
   }
   fieldset {
     border: 0;
+    position: relative;
     padding: 0;
 
     &[disabled] {

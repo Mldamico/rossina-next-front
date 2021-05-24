@@ -1,6 +1,7 @@
 import React, { SyntheticEvent } from 'react';
 import { useForm } from '../../lib/useForm';
 import { useSignUpMutation } from '../../types/generated-queries';
+import DisplayError from '../ErrorMessage';
 import Form from './styles/Form';
 
 export const SignUp = () => {
@@ -31,6 +32,7 @@ export const SignUp = () => {
   return (
     <Form method='POST' onSubmit={handleSubmit}>
       <h2>Registrarse</h2>
+      <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor='nombre'>
           Nombre
