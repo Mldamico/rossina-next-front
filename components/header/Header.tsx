@@ -38,7 +38,9 @@ export const Header = () => {
             </div>
           </div>
           <div className='title'>
-            <h1>Lenceria Rossina</h1>
+            <h1>
+              <Link href='/'>Lenceria Rossina</Link>
+            </h1>
           </div>
           <div className='header-section-right'>
             {!user ? (

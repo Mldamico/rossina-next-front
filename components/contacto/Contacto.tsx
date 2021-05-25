@@ -35,21 +35,33 @@ export const Contacto = () => {
 
             <h3>WhatsApp</h3>
             <div>
-              <a href='https://www.instagram.com/lenceriarossina'>
+              <a
+                href='https://wa.me/541140712073'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <FontAwesomeIcon icon={faWhatsapp} color='#FF3744' size='3x' />
+                1140712073
+              </a>
+            </div>
+            <div>
+              <a
+                href='https://wa.me/541163040000'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
                 <FontAwesomeIcon icon={faWhatsapp} color='#FF3744' size='3x' />
                 1163040000
               </a>
             </div>
             <div>
-              <a href='https://www.instagram.com/lenceriarossina'>
+              <a
+                href='https://wa.me/541131735203'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
                 <FontAwesomeIcon icon={faWhatsapp} color='#FF3744' size='3x' />
-                1163040000
-              </a>
-            </div>
-            <div>
-              <a href='https://www.instagram.com/lenceriarossina'>
-                <FontAwesomeIcon icon={faWhatsapp} color='#FF3744' size='3x' />
-                1163040000
+                1131735203
               </a>
             </div>
           </div>
