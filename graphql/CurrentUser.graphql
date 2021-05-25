@@ -9,6 +9,8 @@ query CurrentUser {
       cart {
         id
         cantidad
+        talleSeleccionado
+        colorSeleccionado
         producto {
           id
           articulo

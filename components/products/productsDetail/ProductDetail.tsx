@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {
   useProductByIdQuery,
   Product as productType,
+  useAddToCartMutation,
+  refetchCurrentUserQuery,
 } from '../../../types/generated-queries';
 
 import {
@@ -19,11 +21,19 @@ export const ProductDetail = ({ productId }: { productId: string }) => {
   const [selectedTalle, setSelectedTalle] = useState('');
 
   const [talles, setTalles] = useState([]);
+  const [addToCart, { loading: addToCartLoading }] = useAddToCartMutation({
+    variables: { id: productId, color: selectedColor, talle: selectedTalle },
+    refetchQueries: [refetchCurrentUserQuery()],
+  });
   const { data, error, loading } = useProductByIdQuery({
     variables: { id: productId },
   });
   if (loading) return <p>Cargando...</p>;
   const product = data?.Product as productType;
+
+  const handleAddToCart = async () => {
+    await addToCart();
+  };
 
   const getTallesFromColor = (e) => {
     setSelectedColor(e.target.value);
@@ -95,8 +105,13 @@ export const ProductDetail = ({ productId }: { productId: string }) => {
             ))}
           </select>
 
-          <button className='btn-add-cart' type='button'>
-            Agregar al Carrito
+          <button
+            className='btn-add-cart'
+            type='button'
+            disabled={addToCartLoading}
+            onClick={handleAddToCart}
+          >
+            {addToCartLoading ? 'Agregando al carrito' : 'Agregar al Carrito'}
           </button>
         </div>
       </ProductDetailStyles>

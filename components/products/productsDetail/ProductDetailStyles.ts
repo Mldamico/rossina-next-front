@@ -49,6 +49,10 @@ export const ProductDetailStyles = styled.section`
     font-size: 1.6rem;
   }
 
+  .btn-add-cart:disabled {
+    opacity: 0.6;
+  }
+
   select {
     padding: 0.5rem;
     border-radius: 1rem;

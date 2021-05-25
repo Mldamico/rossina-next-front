@@ -1,5 +1,5 @@
-mutation AddToCart($id: ID!) {
-  addToCart(productId: $id) {
+mutation AddToCart($id: ID!, $color: String!, $talle: String) {
+  addToCart(productId: $id, color: $color, talle: $talle) {
     id
   }
 }

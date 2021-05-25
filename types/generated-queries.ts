@@ -158,12 +158,16 @@ export type CartItem = {
   __typename?: 'CartItem';
   id: Scalars['ID'];
   cantidad?: Maybe<Scalars['Int']>;
+  colorSeleccionado?: Maybe<Scalars['String']>;
+  talleSeleccionado?: Maybe<Scalars['String']>;
   producto?: Maybe<Product>;
   usuario?: Maybe<User>;
 };
 
 export type CartItemCreateInput = {
   cantidad?: Maybe<Scalars['Int']>;
+  colorSeleccionado?: Maybe<Scalars['String']>;
+  talleSeleccionado?: Maybe<Scalars['String']>;
   producto?: Maybe<ProductRelateToOneInput>;
   usuario?: Maybe<UserRelateToOneInput>;
 };
@@ -177,6 +181,8 @@ export type CartItemRelateToManyInput = {
 
 export type CartItemUpdateInput = {
   cantidad?: Maybe<Scalars['Int']>;
+  colorSeleccionado?: Maybe<Scalars['String']>;
+  talleSeleccionado?: Maybe<Scalars['String']>;
   producto?: Maybe<ProductRelateToOneInput>;
   usuario?: Maybe<UserRelateToOneInput>;
 };
@@ -200,6 +206,42 @@ export type CartItemWhereInput = {
   cantidad_gte?: Maybe<Scalars['Int']>;
   cantidad_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
   cantidad_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  colorSeleccionado?: Maybe<Scalars['String']>;
+  colorSeleccionado_not?: Maybe<Scalars['String']>;
+  colorSeleccionado_contains?: Maybe<Scalars['String']>;
+  colorSeleccionado_not_contains?: Maybe<Scalars['String']>;
+  colorSeleccionado_starts_with?: Maybe<Scalars['String']>;
+  colorSeleccionado_not_starts_with?: Maybe<Scalars['String']>;
+  colorSeleccionado_ends_with?: Maybe<Scalars['String']>;
+  colorSeleccionado_not_ends_with?: Maybe<Scalars['String']>;
+  colorSeleccionado_i?: Maybe<Scalars['String']>;
+  colorSeleccionado_not_i?: Maybe<Scalars['String']>;
+  colorSeleccionado_contains_i?: Maybe<Scalars['String']>;
+  colorSeleccionado_not_contains_i?: Maybe<Scalars['String']>;
+  colorSeleccionado_starts_with_i?: Maybe<Scalars['String']>;
+  colorSeleccionado_not_starts_with_i?: Maybe<Scalars['String']>;
+  colorSeleccionado_ends_with_i?: Maybe<Scalars['String']>;
+  colorSeleccionado_not_ends_with_i?: Maybe<Scalars['String']>;
+  colorSeleccionado_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  colorSeleccionado_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  talleSeleccionado?: Maybe<Scalars['String']>;
+  talleSeleccionado_not?: Maybe<Scalars['String']>;
+  talleSeleccionado_contains?: Maybe<Scalars['String']>;
+  talleSeleccionado_not_contains?: Maybe<Scalars['String']>;
+  talleSeleccionado_starts_with?: Maybe<Scalars['String']>;
+  talleSeleccionado_not_starts_with?: Maybe<Scalars['String']>;
+  talleSeleccionado_ends_with?: Maybe<Scalars['String']>;
+  talleSeleccionado_not_ends_with?: Maybe<Scalars['String']>;
+  talleSeleccionado_i?: Maybe<Scalars['String']>;
+  talleSeleccionado_not_i?: Maybe<Scalars['String']>;
+  talleSeleccionado_contains_i?: Maybe<Scalars['String']>;
+  talleSeleccionado_not_contains_i?: Maybe<Scalars['String']>;
+  talleSeleccionado_starts_with_i?: Maybe<Scalars['String']>;
+  talleSeleccionado_not_starts_with_i?: Maybe<Scalars['String']>;
+  talleSeleccionado_ends_with_i?: Maybe<Scalars['String']>;
+  talleSeleccionado_not_ends_with_i?: Maybe<Scalars['String']>;
+  talleSeleccionado_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  talleSeleccionado_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   producto?: Maybe<ProductWhereInput>;
   producto_is_null?: Maybe<Scalars['Boolean']>;
   usuario?: Maybe<UserWhereInput>;
@@ -844,6 +886,8 @@ export type MutationRedeemUserPasswordResetTokenArgs = {
 
 export type MutationAddToCartArgs = {
   productId?: Maybe<Scalars['ID']>;
+  color?: Maybe<Scalars['String']>;
+  talle?: Maybe<Scalars['String']>;
 };
 
 /**  A keystone list  */
@@ -1980,6 +2024,10 @@ export enum SortCartItemsBy {
   IdDesc = 'id_DESC',
   CantidadAsc = 'cantidad_ASC',
   CantidadDesc = 'cantidad_DESC',
+  ColorSeleccionadoAsc = 'colorSeleccionado_ASC',
+  ColorSeleccionadoDesc = 'colorSeleccionado_DESC',
+  TalleSeleccionadoAsc = 'talleSeleccionado_ASC',
+  TalleSeleccionadoDesc = 'talleSeleccionado_DESC',
   ProductoAsc = 'producto_ASC',
   ProductoDesc = 'producto_DESC',
   UsuarioAsc = 'usuario_ASC',
@@ -2816,6 +2864,8 @@ export type _QueryMeta = {
 
 export type AddToCartMutationVariables = Exact<{
   id: Scalars['ID'];
+  color: Scalars['String'];
+  talle?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -2919,6 +2969,19 @@ export type CurrentUserQuery = (
         )> }
       )> }
     )> }
+  )> }
+);
+
+export type DeleteCartItemMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteCartItemMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteCartItem?: Maybe<(
+    { __typename?: 'CartItem' }
+    & Pick<CartItem, 'id'>
   )> }
 );
 
@@ -3111,8 +3174,8 @@ export type ProductByBrandQuery = (
 
 
 export const AddToCartDocument = gql`
-    mutation AddToCart($id: ID!) {
-  addToCart(productId: $id) {
+    mutation AddToCart($id: ID!, $color: String!, $talle: String) {
+  addToCart(productId: $id, color: $color, talle: $talle) {
     id
   }
 }
@@ -3133,6 +3196,8 @@ export type AddToCartMutationFn = Apollo.MutationFunction<AddToCartMutation, Add
  * const [addToCartMutation, { data, loading, error }] = useAddToCartMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      color: // value for 'color'
+ *      talle: // value for 'talle'
  *   },
  * });
  */
@@ -3360,6 +3425,39 @@ export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, Curren
 export function refetchCurrentUserQuery(variables?: CurrentUserQueryVariables) {
       return { query: CurrentUserDocument, variables: variables }
     }
+export const DeleteCartItemDocument = gql`
+    mutation deleteCartItem($id: ID!) {
+  deleteCartItem(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteCartItemMutationFn = Apollo.MutationFunction<DeleteCartItemMutation, DeleteCartItemMutationVariables>;
+
+/**
+ * __useDeleteCartItemMutation__
+ *
+ * To run a mutation, you first call `useDeleteCartItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCartItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCartItemMutation, { data, loading, error }] = useDeleteCartItemMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCartItemMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCartItemMutation, DeleteCartItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCartItemMutation, DeleteCartItemMutationVariables>(DeleteCartItemDocument, options);
+      }
+export type DeleteCartItemMutationHookResult = ReturnType<typeof useDeleteCartItemMutation>;
+export type DeleteCartItemMutationResult = Apollo.MutationResult<DeleteCartItemMutation>;
+export type DeleteCartItemMutationOptions = Apollo.BaseMutationOptions<DeleteCartItemMutation, DeleteCartItemMutationVariables>;
 export const ProductByIdDocument = gql`
     query productById($id: ID!) {
   Product(where: {id: $id}) {
@@ -3811,10 +3909,12 @@ export type BrandFieldPolicy = {
 	producto?: FieldPolicy<any> | FieldReadFunction<any>,
 	_productoMeta?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CartItemKeySpecifier = ('id' | 'cantidad' | 'producto' | 'usuario' | CartItemKeySpecifier)[];
+export type CartItemKeySpecifier = ('id' | 'cantidad' | 'colorSeleccionado' | 'talleSeleccionado' | 'producto' | 'usuario' | CartItemKeySpecifier)[];
 export type CartItemFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	cantidad?: FieldPolicy<any> | FieldReadFunction<any>,
+	colorSeleccionado?: FieldPolicy<any> | FieldReadFunction<any>,
+	talleSeleccionado?: FieldPolicy<any> | FieldReadFunction<any>,
 	producto?: FieldPolicy<any> | FieldReadFunction<any>,
 	usuario?: FieldPolicy<any> | FieldReadFunction<any>
 };

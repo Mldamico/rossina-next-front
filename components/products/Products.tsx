@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
 import {
   Product as productType,
-  useAllProductsQuery,
   useProductsPerPageQuery,
 } from '../../types/generated-queries';
 
 import { Product } from './Product';
 import { LoadingSpinner } from '../layout/LoadingSpinner';
-import { Pagination } from '../layout/Pagination';
 import { perPage } from '../../config';
 import { ProductsContainer } from '../layout/ProductsContainer';
 import { useRouter } from 'next/router';

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Contacto } from '../components/contacto/Contacto';
 
 const ContactoPage = () => {
-  return <div></div>;
+  return <Contacto />;
 };
 
 export default ContactoPage;
